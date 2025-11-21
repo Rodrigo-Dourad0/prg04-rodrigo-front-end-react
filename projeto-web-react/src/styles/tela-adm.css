@@ -1,0 +1,41 @@
+
+.container {
+    max-width: 90%;
+    margin-top: 20px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 1%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-width: 50%;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+ 
+    .container {
+        flex-direction: column; 
+        width: 90%;
+        height: auto; 
+        max-width: 100%;
+    }
+
+    body{font-size: small;}
+
+    .btn-edit, .btn-delete{
+        width: 80%;
+    
+    }
+
+}
