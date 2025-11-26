@@ -8,12 +8,17 @@ body{
     background-attachment: fixed;
     min-height: 100vh;
     margin: 0;
+}
 
+
+
+ html, body{
+
+    
     overflow-x: hidden;
     width: 100%;
 
-}
-
+ }
 #root {
 
     min-height: 100vh;

@@ -1,5 +1,6 @@
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
+import HowItWorks from '../components/HowItWorks';
 import Navbar from '../components/Navbar';
 import Stats from '../components/Stats';
 
@@ -8,14 +9,15 @@ import '../styles/home-page.css';
 function Home() {
   return (
     <>
-      <Navbar />
+    <Navbar />
       
     <Hero />
 
     <Stats />
+    <HowItWorks />
 
       
-      <Footer />
+    <Footer />
     </>
   );
 }
