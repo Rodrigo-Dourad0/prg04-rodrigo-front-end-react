@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import '../styles/atividade4.css';
 
@@ -74,7 +75,7 @@ function Atividade4() {
         </article>
       </main>
 
-      <footer>&copy; Roteiro Livre</footer>
+      <Footer />
     </>
   );
 }

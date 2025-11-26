@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import '../styles/atividade3.css';
 
@@ -38,7 +39,7 @@ function Atividade3() {
             </div>
         </article>
       </main>
-      <footer>&copy; Roteiro Livre</footer>
+      <Footer />
     </>
   );
 }
