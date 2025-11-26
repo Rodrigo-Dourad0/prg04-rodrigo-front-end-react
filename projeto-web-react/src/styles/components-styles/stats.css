@@ -12,27 +12,27 @@
   
 }
 
-/* O Número (100+, 2k+) */
+
 .stat-number {
     color: #027BD1;
     font-size: 2.2rem;
-    font-weight: 800; /* Extra negrito */
+    font-weight: 800; 
     line-height: 1.2;
 }
 
-/* O Texto (Destinos, Clientes) */
+
 .stat-label {
-    color: #889299; /* Um cinza médio, elegante */
+    color: #889299; 
     font-size: 0.95rem;
     font-weight: 600;
 }
 
-/* Linha Divisória Customizada */
+
 .vr {
     width: 1px;
-    height: 50px; /* Altura da linha */
-    background-color: #e0e0e0; /* Cinza claro */
-    opacity: 1; /* Remove transparência padrão do bootstrap */
+    height: 50px; 
+    background-color: #e0e0e0; 
+    opacity: 1; 
 }
 
 /* Responsividade */
