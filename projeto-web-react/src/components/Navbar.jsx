@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import '../styles/navbar.css';
+import '../styles/components-styles/navbar.css';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-custom">
+    <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
       <Link className="navbar-brand fw-bold fs-4 brand-logo" to="/">
         Roteiro Livre
       </Link>
