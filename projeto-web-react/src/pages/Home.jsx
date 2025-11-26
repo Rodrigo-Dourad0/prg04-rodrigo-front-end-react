@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import HowItWorks from '../components/HowItWorks';
 import Navbar from '../components/Navbar';
 import Stats from '../components/Stats';
+import Tours from '../components/Tours';
 
 import '../styles/home-page.css'; 
 
@@ -14,6 +15,9 @@ function Home() {
     <Hero />
 
     <Stats />
+
+    <Tours />
+
     <HowItWorks />
 
       

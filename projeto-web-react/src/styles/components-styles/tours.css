@@ -1,0 +1,39 @@
+.tours-section {
+    padding: 80px 20px;
+    background-color: #ffffff;
+}
+
+.tours-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.tours-title {
+    color: #027BD1;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.tours-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+    font-weight: 400;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+
+.cards-grid-container {
+    width: 100%;
+    min-height: 100px;
+    
+}
+
+@media (max-width: 768px) {
+    .tours-title {
+        font-size: 2rem;
+    }
+}
