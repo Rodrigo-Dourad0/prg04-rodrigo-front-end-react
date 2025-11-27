@@ -1,0 +1,120 @@
+
+/* O Container Principal que centraliza a caixa na tela */
+.cadastro-wrapper {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); 
+    padding: 20px;
+}
+
+/* A Caixa do Formulário */
+.cadastro-box {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px; 
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative; 
+}
+
+/* Botão de Voltar (Seta) */
+.btn-back {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #6c757d;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: #333;
+}
+
+/* Títulos e Textos */
+.cadastro-title {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.cadastro-subtitle {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cadastro-subtitle a {
+    color: #027BD1;
+    text-decoration: none;
+}
+
+.cadastro-subtitle a:hover {
+    text-decoration: underline;
+}
+
+/* Estilização dos Inputs */
+.form-label-cadastro {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.form-control-cadastro {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.2s;
+}
+
+.form-control-cadastro:focus {
+    border-color: #027BD1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(2, 123, 209, 0.1);
+}
+
+/* Botão Registrar */
+.btn-registrar {
+    width: 100%;
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px; 
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn-registrar:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .cadastro-box {
+        padding: 30px 20px;
+    }
+    
+    .cadastro-title {
+        font-size: 1.75rem;
+    }
+}
