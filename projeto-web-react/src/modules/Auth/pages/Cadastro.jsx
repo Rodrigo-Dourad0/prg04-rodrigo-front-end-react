@@ -9,13 +9,11 @@ function Cadastro() {
     <>
       <Navbar />
 
+        
+
       <div className="cadastro-wrapper">
         <div className="cadastro-box">
             
-            {/* Botão de Voltar (Seta para a esquerda) */}
-            <Link to="/" className="btn-back" title="Voltar">
-                &larr;
-            </Link>
 
             <h1 className="cadastro-title">Cadastre-se</h1>
             

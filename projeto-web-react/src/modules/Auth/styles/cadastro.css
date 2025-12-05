@@ -20,20 +20,6 @@
     position: relative; 
 }
 
-/* Botão de Voltar (Seta) */
-.btn-back {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #6c757d;
-    font-size: 1.5rem;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.btn-back:hover {
-    color: #333;
-}
 
 /* Títulos e Textos */
 .cadastro-title {

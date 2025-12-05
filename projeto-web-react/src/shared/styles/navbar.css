@@ -52,3 +52,24 @@
     background-color: #026aa6 !important;
     border-color: #026aa6 !important;
 }
+
+.btn-back-nav {
+    background: transparent;
+    border: none;
+    color: var(--navbar-gray);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+}
+
+.btn-back-nav:hover {
+    background-color: #f0f2f5;
+    color: var(--navbar-blue);
+    transform: translateX(-3px);
+}
