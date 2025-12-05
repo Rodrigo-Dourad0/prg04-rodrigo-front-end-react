@@ -6,6 +6,7 @@ import Admin from './modules/Admin/pages/Admin';
 import Cadastro from './modules/Auth/pages/Cadastro';
 import Atividade3 from './modules/Atividades/pages/Atividade3';
 import Atividade4 from './modules/Atividades/pages/Atividade4';
+import AdministracaoUsuarios from './modules/Admin/pages/AdministracaoUsuarios';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/usuarios" element={<AdministracaoUsuarios />} />
         <Route path="/atividade-3" element={<Atividade3 />} />
         <Route path="/atividade-4" element={<Atividade4 />} />
       </Routes>
