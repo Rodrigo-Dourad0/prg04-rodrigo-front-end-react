@@ -1,4 +1,4 @@
-import '../styles/components-styles/stats.css';
+import '../styles/stats.css';
 
 function Stats() {
   return (

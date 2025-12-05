@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './styles/css-global.css'; // CSS Global importa aqui
+import './shared/styles/css-global.css';
 
-import Home from './pages/Home';
-import Admin from './pages/Admin';
-import Atividade3 from './pages/Atividade3';
-import Atividade4 from './pages/Atividade4';
-import Cadastro from './pages/Cadastro';
+import Home from './modules/Home/pages/Home';
+import Admin from './modules/Admin/pages/Admin';
+import Cadastro from './modules/Auth/pages/Cadastro';
+import Atividade3 from './modules/Atividades/pages/Atividade3';
+import Atividade4 from './modules/Atividades/pages/Atividade4';
 
 function App() {
   return (

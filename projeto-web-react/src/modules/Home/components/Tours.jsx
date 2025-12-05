@@ -1,4 +1,4 @@
-import '../styles/components-styles/tours.css';
+import '../styles/tours.css';
 
 function Tours() {
   return (

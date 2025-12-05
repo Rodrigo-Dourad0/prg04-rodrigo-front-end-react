@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '../styles/components-styles/login-modal.css';
+import '../styles/login-modal.css';
 
 function LoginModal({ isOpen, onClose }) {
   // Se não estiver aberto, não renderiza nada (null)
@@ -37,7 +37,7 @@ function LoginModal({ isOpen, onClose }) {
                 </div>
 
                 {/* Botão de Ação */}
-                <Link to="cadastro" className="btn btn-login-action w-100 text-decoration-none text-center d-block">
+                <Link to="/admin" className="btn btn-login-action w-100 text-decoration-none text-center d-block">
                     ENTRAR
                 </Link>
             </form>

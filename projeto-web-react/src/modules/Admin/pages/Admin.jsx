@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar';
+import Navbar from '../../../shared/components/Navbar';
 import '../styles/tela-adm.css';
 
 function Admin() {

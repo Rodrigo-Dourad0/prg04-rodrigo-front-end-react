@@ -1,7 +1,7 @@
-import Footer from '../components/Footer';
+import Footer from '../../../shared/components/Footer';
 import Hero from '../components/Hero';
 import HowItWorks from '../components/HowItWorks';
-import Navbar from '../components/Navbar';
+import Navbar from '../../../shared/components/Navbar';
 import Stats from '../components/Stats';
 import Tours from '../components/Tours';
 

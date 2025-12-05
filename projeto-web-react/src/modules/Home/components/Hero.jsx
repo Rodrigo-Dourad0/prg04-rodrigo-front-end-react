@@ -1,5 +1,5 @@
 import SearchBar from './SearchBar';
-import '../styles/components-styles/hero.css';
+import '../styles/hero.css';
 
 function Hero() {
   return (

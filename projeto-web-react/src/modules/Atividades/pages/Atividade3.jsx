@@ -1,5 +1,5 @@
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
+import Footer from '../../../shared/components/Footer';
+import Navbar from '../../../shared/components/Navbar';
 import '../styles/atividade3.css';
 
 function Atividade3() {
