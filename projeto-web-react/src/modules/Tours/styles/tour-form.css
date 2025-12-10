@@ -1,0 +1,73 @@
+.tour-form {
+    background-color: #fff;
+}
+
+.tour-form label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.tour-form .form-control:focus, 
+.tour-form .form-select:focus {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 0.25rem rgba(33, 150, 243, 0.25);
+}
+
+.tour-form textarea {
+    resize: vertical;
+}
+
+.image-upload-container {
+    position: relative;
+    width: 100%;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.upload-box-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    border: 2px dashed #ced4da;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.upload-box-label:hover {
+    background-color: #e9ecef;
+    border-color: #2196f3;
+}
+
+.placeholder-content {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    color: #2196f3;
+    margin-bottom: 10px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.upload-box-label:hover .preview-image {
+    opacity: 0.8;
+}

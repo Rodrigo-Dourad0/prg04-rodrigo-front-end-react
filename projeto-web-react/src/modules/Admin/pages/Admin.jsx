@@ -21,6 +21,14 @@ function Admin() {
                 <span>Administração de Usuários</span>
             </Link>
 
+
+            <Link to="/CreateTours" className="btn p-3 dashboard-card card-users text-decoration-none">
+                <i className="bi bi-people-fill dashboard-icon"></i>
+                <span>Criar Viagens - teste </span>
+            </Link>
+
+
+
             <button 
                 onClick={() => setAtividadesOpen(!atividadesOpen)} 
                 className="btn p-3 dashboard-card card-activities w-100 text-start"

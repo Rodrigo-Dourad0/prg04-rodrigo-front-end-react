@@ -16,10 +16,18 @@ function Home() {
 
     <Stats />
 
-    <Tours />
 
-    <HowItWorks />
+    <section id="Tours">
+      
+       <Tours />
 
+    </section>
+
+    <section id="Como-Funciona">
+      
+       <HowItWorks />
+
+    </section>
       
     <Footer />
     </>

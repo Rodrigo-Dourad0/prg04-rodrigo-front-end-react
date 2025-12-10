@@ -50,12 +50,12 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="menuPrincipal">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
                 <li className="nav-item">
-                <a className="nav-link fw-semibold nav-link-custom" href="#">
+                <a className="nav-link fw-semibold nav-link-custom" href="#Tours">
                     Roteiros
                 </a>
                 </li>
                 <li className="nav-item">
-                <a className="nav-link fw-semibold nav-link-custom" href="#">
+                <a className="nav-link fw-semibold nav-link-custom" href="#Como-Funciona">
                     Como Funciona
                 </a>
                 </li>
@@ -75,7 +75,7 @@ function Navbar() {
                 </button>
 
                 <Link 
-                    to="/cadastro" className="btn fw-bold rounded-pill px-4 btn-signup" onClick={handleCloseLogin}>
+                    to="/Cadastro" className="btn fw-bold rounded-pill px-4 btn-signup" onClick={handleCloseLogin}>
                     Cadastre-se
                 </Link>
 
