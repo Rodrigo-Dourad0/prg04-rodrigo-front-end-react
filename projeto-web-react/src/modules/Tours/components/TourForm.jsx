@@ -48,6 +48,22 @@ function TourForm({ onSubmit }) {
     onSubmit(payload);
   };
 
+
+  const handleRemoveImage = (e) => {
+    e.stopPropagation(); 
+    e.preventDefault();
+    
+    setFormData((prev) => ({ ...prev, imagem: null }));
+    setPreview(null);
+    
+    
+    const fileInput = document.getElementById('imagem-upload');
+    if (fileInput) {
+        fileInput.value = '';
+    }
+  };
+  
+
   return (
     <form className="tour-form" onSubmit={handleSubmit}>
       
@@ -62,7 +78,8 @@ function TourForm({ onSubmit }) {
         </div>
       </div>
 
-      <div className="mb-4">
+        
+     <div className="mb-4">
         <label className="form-label">Foto de Capa</label>
         <div className="image-upload-container">
             <input 
@@ -76,7 +93,17 @@ function TourForm({ onSubmit }) {
             
             <label htmlFor="imagem-upload" className="upload-box-label">
                 {preview ? (
-                    <img src={preview} alt="Pré-visualização" className="preview-image" />
+                    <div className="preview-container">
+                        <img src={preview} alt="Pré-visualização" className="preview-image" />
+                        <button 
+                            type="button" 
+                            className="btn-remove-image" 
+                            onClick={handleRemoveImage}
+                            title="Remover imagem"
+                        >
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                    </div>
                 ) : (
                     <div className="placeholder-content">
                         <i className="bi bi-cloud-arrow-up-fill placeholder-icon"></i>
