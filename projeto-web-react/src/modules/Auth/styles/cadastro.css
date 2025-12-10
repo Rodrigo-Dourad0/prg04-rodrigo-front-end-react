@@ -1,4 +1,3 @@
-/* O Container Principal */
 .cadastro-wrapper {
     display: flex;
     justify-content: center;
@@ -8,7 +7,6 @@
     background-color: #f0f2f5; 
 }
 
-/* Caixa do Formulário */
 .cadastro-box {
     background-color: #ffffff;
     width: 100%;
@@ -18,7 +16,6 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Títulos */
 .cadastro-title {
     color: #333;
     font-size: 1.8rem;
@@ -37,7 +34,6 @@
     padding-bottom: 10px;
 }
 
-
 .form-row {
     display: flex;
     gap: 20px; 
@@ -50,12 +46,10 @@
     flex: 1; 
 }
 
-
 .col-small { flex: 1; } 
 .col-medium { flex: 2; } 
 .col-large { flex: 4; }  
 
-/* Estilização dos Inputs */
 .form-label-cadastro {
     font-weight: 600;
     color: #444;
@@ -79,7 +73,6 @@
     box-shadow: 0 0 0 3px rgba(2, 123, 209, 0.1);
 }
 
-/* Área dos Botões */
 .button-group {
     display: flex;
     justify-content: center;
@@ -119,12 +112,48 @@
     background-color: #5a6268;
 }
 
-/*Em telas pequenas, as colunas viram linhas */
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container .form-control-cadastro {
+    padding-right: 45px;
+}
+
+.btn-toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.btn-toggle-password:hover {
+    color: #027BD1;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .form-row {
         flex-direction: column;
         gap: 10px;
     }
 }
-
-   
