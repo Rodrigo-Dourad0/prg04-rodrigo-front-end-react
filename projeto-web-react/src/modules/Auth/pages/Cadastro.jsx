@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
 import Navbar from '../../../shared/components/Navbar';
-import '../styles/cadastro.css'; 
+import { useCadastro } from '../hooks/useCadastro';
+import { Link } from 'react-router-dom';
+import '../styles/cadastro.css';
 
 function Cadastro() {
-  const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [showSenha, setShowSenha] = useState(false);
-  const [showConfirmar, setShowConfirmar] = useState(false);
-  const [erro, setErro] = useState('');
-
-  const handleCadastro = (e) => {
-    e.preventDefault();
-    if (senha !== confirmarSenha) {
-      setErro('As senhas não coincidem.');
-    } else {
-      setErro('');
-      console.log('Cadastro validado');
-    }
-  };
+  const {
+    senha,
+    setSenha,
+    confirmarSenha,
+    setConfirmarSenha,
+    showSenha,
+    toggleShowSenha,
+    showConfirmar,
+    toggleShowConfirmar,
+    erro,
+    handleCadastro
+  } = useCadastro();
 
   return (
     <>
@@ -51,48 +49,51 @@ function Cadastro() {
                     </div>
                 </div>
 
-               <div className="form-row">
+              
+                <div className="form-row">
                     <div className="form-col">
                         <label className="form-label-cadastro">Senha</label>
                         <div className="password-input-container">
                             <input 
                                 type={showSenha ? "text" : "password"} 
                                 className="form-control-cadastro" 
-                                placeholder="Digite sua senha"
+                                placeholder="********"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
                             />
                             <button 
                                 type="button" 
-                                className="btn-toggle-password"
-                                onClick={() => setShowSenha(!showSenha)}
+                                className="btn-toggle-password" 
+                                onClick={toggleShowSenha}
+                                aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
                             >
-                                
-                                <i className={showSenha ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+                                <i className={showSenha ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                             </button>
                         </div>
                     </div>
+
                     <div className="form-col">
                         <label className="form-label-cadastro">Confirmar Senha</label>
                         <div className="password-input-container">
                             <input 
                                 type={showConfirmar ? "text" : "password"} 
                                 className="form-control-cadastro" 
-                                placeholder="Confirme a senha"
+                                placeholder="********"
                                 value={confirmarSenha}
                                 onChange={(e) => setConfirmarSenha(e.target.value)}
                             />
                             <button 
                                 type="button" 
-                                className="btn-toggle-password"
-                                onClick={() => setShowConfirmar(!showConfirmar)}
+                                className="btn-toggle-password" 
+                                onClick={toggleShowConfirmar}
+                                aria-label={showConfirmar ? "Ocultar senha" : "Mostrar senha"}
                             >
-                               
-                                <i className={showConfirmar ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+                                <i className={showConfirmar ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                             </button>
                         </div>
                     </div>
                 </div>
+              
 
                 {erro && <div className="error-message">{erro}</div>}
 
@@ -128,9 +129,11 @@ function Cadastro() {
                     <button type="submit" className="btn-registrar">
                         Cadastrar
                     </button>
-                    <button type="button" className="btn-cancelar">
+                    
+                    <Link to="/" className="btn-cancelar">
                         Cancelar
-                    </button>
+                    </Link>
+
                 </div>
 
             </form>

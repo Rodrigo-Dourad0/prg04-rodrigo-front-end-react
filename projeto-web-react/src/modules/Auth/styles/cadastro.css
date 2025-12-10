@@ -110,6 +110,8 @@
 
 .btn-cancelar:hover {
     background-color: #5a6268;
+    color: white;
+    text-decoration: none;
 }
 
 .password-input-container {
