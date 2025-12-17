@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../../shared/services/api'; 
+import api from '../../../shared/services/api';
 
 export function useCadastro() {
   const navigate = useNavigate();
@@ -8,7 +8,6 @@ export function useCadastro() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
 
-  // Estado único para todos os campos
   const [formData, setFormData] = useState({
     email: '', senha: '', confirmarSenha: '',
     nome: '', cpf: '', telefone: '',
@@ -22,39 +21,50 @@ export function useCadastro() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Transforma os dados soltos no JSON aninhado que o Java quer
-  const montarPayload = () => {
-    return {
-      email: formData.email,
-      senha: formData.senha,
-      pessoa: {
-        nome: formData.nome,
-        cpf: formData.cpf,
-        telefone: formData.telefone,
-        endereco: {
-          rua: formData.rua,
-          numero: formData.numero,
-          bairro: formData.bairro,
-          cidade: formData.cidade,
-          cep: formData.cep,
-          estado: formData.estado || 'BA' // Valor padrão se não tiver campo
-        }
-      }
-    };
+  // --- LÓGICA DE VALIDAÇÃO E AVANÇO ---
+  const nextStep = () => {
+    if (step === 1) {
+        if (!formData.email || !formData.senha) return setErro("Preencha email e senha.");
+        if (formData.senha !== formData.confirmarSenha) return setErro("As senhas não coincidem.");
+    }
+    if (step === 2) {
+        if (!formData.nome || !formData.cpf) return setErro("Preencha Nome e CPF.");
+    }
+    setErro('');
+    setStep(prev => prev + 1);
   };
 
-  const handleCadastro = async (e) => {
-    e.preventDefault();
+  const prevStep = () => setStep(prev => prev - 1);
+  const toggleShowSenha = () => setShowSenha(!showSenha);
+
+  // --- ENVIO FINAL PARA API ---
+  const enviarDadosParaApi = async () => {
     setErro('');
     setLoading(true);
 
     try {
-        const payload = montarPayload();
-        // Envia para o Back-end
-        await api.post('/usuarios/cadastrar', payload);
+        const payload = {
+          email: formData.email,
+          senha: formData.senha,
+          pessoa: {
+            nome: formData.nome,
+            cpf: formData.cpf,
+            telefone: formData.telefone,
+            endereco: {
+              rua: formData.rua,
+              numero: formData.numero,
+              bairro: formData.bairro,
+              cidade: formData.cidade,
+              cep: formData.cep,
+              estado: formData.estado || 'BA'
+            }
+          }
+        };
         
+        await api.post('/usuarios/cadastrar', payload);
         alert('Cadastro realizado com sucesso!');
-        navigate('/'); // Volta para Home/Login
+        navigate('/'); 
+
     } catch (error) {
         console.error("Erro:", error);
         const msg = error.response?.data?.message || "Erro ao conectar com o servidor.";
@@ -64,21 +74,27 @@ export function useCadastro() {
     }
   };
 
-  // Controle das etapas 
-  const nextStep = () => {
-    if (step === 1) {
-        if (!formData.email || !formData.senha) return setErro("Preencha email e senha.");
-        if (formData.senha !== formData.confirmarSenha) return setErro("As senhas não coincidem.");
+  
+  
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (step < 3) {
+        nextStep(); 
+    } else {
+        enviarDadosParaApi(); 
     }
-    setErro('');
-    setStep(prev => prev + 1);
   };
 
-  const prevStep = () => setStep(prev => prev - 1);
-  const toggleShowSenha = () => setShowSenha(!showSenha);
-
   return {
-    step, formData, handleChange, nextStep, prevStep,
-    showSenha, toggleShowSenha, erro, loading, handleCadastro
+    step,
+    formData,
+    handleChange,
+    handleFormSubmit, 
+    prevStep, 
+    showSenha,
+    toggleShowSenha,
+    erro,
+    loading
   };
 }
