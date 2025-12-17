@@ -1,0 +1,102 @@
+.parceiro-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    padding: 20px;
+    padding-top: 20px; /
+    margin-top: 0;     
+    background-color: #f0f2f5;
+    box-sizing: border-box; 
+}
+.parceiro-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.parceiro-title {
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.parceiro-subtitle {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-control-parceiro {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-control-parceiro:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+textarea.form-control-parceiro {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-confirmar {
+    width: 100%;
+    padding: 14px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.btn-confirmar:hover {
+    background-color: #116fbd;
+}
+
+.btn-confirmar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.alert-erro {
+    background-color: #fde8e8;
+    color: #c81e1e;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    border: 1px solid #fbd5d5;
+}

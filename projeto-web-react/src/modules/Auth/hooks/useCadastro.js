@@ -51,7 +51,7 @@ export function useCadastro() {
     try {
         const payload = montarPayload();
         // Envia para o Back-end
-        await api.post('/usuarios/criar', payload);
+        await api.post('/usuarios/cadastrar', payload);
         
         alert('Cadastro realizado com sucesso!');
         navigate('/'); // Volta para Home/Login

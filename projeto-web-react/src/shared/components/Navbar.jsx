@@ -59,11 +59,11 @@ function Navbar() {
                     Como Funciona
                 </a>
                 </li>
-                <li className="nav-item">
-                <a className="nav-link fw-semibold nav-link-custom" href="#">
-                    Para Organizadores
-                </a>
-                </li>
+                <li className="navbar-item">
+                    <Link to="/seja-parceiro" className="nav-link fw-semibold nav-link-custom">
+                    Seja Parceiro
+                    </Link>
+                 </li>
             </ul>
             
             <div className="d-flex align-items-center gap-2">

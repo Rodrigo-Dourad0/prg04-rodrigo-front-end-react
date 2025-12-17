@@ -73,3 +73,14 @@
     color: var(--navbar-blue);
     transform: translateX(-3px);
 }
+
+.highlight-link {
+    color: #ff9800 !important; 
+    font-weight: 700;          
+    transition: all 0.3s ease;
+}
+
+.highlight-link:hover {
+    color: #e68900 !important;
+    transform: scale(1.05);    
+}

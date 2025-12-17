@@ -8,6 +8,7 @@ import Atividade3 from './modules/Atividades/pages/Atividade3';
 import Atividade4 from './modules/Atividades/pages/Atividade4';
 import CreateTour from './modules/Tours/pages/CreateTour';
 import AdministracaoUsuarios from './modules/Admin/pages/AdministracaoUsuarios';
+import SejaParceiro from './modules/Tours/pages/SejaParceiro';
 
 function App() {
   return (
@@ -21,11 +22,15 @@ function App() {
 
         <Route path="/admin/usuarios" element={<AdministracaoUsuarios />} />
 
+        <Route path="/seja-parceiro" element={<SejaParceiro />} />
+
         <Route path="/CreateTours" element={<CreateTour />} />
 
         <Route path="/atividade-3" element={<Atividade3 />} />
 
         <Route path="/atividade-4" element={<Atividade4 />} />
+
+
       </Routes>
     </BrowserRouter>
   );
