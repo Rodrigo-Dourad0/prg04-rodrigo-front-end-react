@@ -5,15 +5,15 @@ import '../styles/cadastro.css';
 
 function Cadastro() {
   const {
-    senha,
-    setSenha,
-    confirmarSenha,
-    setConfirmarSenha,
+    step,
+    formData,
+    handleChange,
+    nextStep,
+    prevStep,
     showSenha,
     toggleShowSenha,
-    showConfirmar,
-    toggleShowConfirmar,
     erro,
+    loading,
     handleCadastro
   } = useCadastro();
 
@@ -24,115 +24,224 @@ function Cadastro() {
       <div className="cadastro-wrapper">
         <div className="cadastro-box">
             
-            <h1 className="cadastro-title">Cadastro de Usuário</h1>
+            <h1 className="cadastro-title">Criar Conta</h1>
+
+            {/* --- BARRA DE PROGRESSO --- */}
+            <div className="steps-indicator">
+                <div className={`step-item ${step >= 1 ? 'active' : ''}`}>
+                    <div className="step-circle">1</div>
+                    <span className="step-label">Acesso</span>
+                </div>
+                <div className="step-line"></div>
+                <div className={`step-item ${step >= 2 ? 'active' : ''}`}>
+                    <div className="step-circle">2</div>
+                    <span className="step-label">Pessoal</span>
+                </div>
+                <div className="step-line"></div>
+                <div className={`step-item ${step >= 3 ? 'active' : ''}`}>
+                    <div className="step-circle">3</div>
+                    <span className="step-label">Endereço</span>
+                </div>
+            </div>
             
             <form onSubmit={handleCadastro}>
-                <div className="form-row">
-                    <div className="form-col">
-                        <label className="form-label-cadastro">Nome</label>
-                        <input type="text" className="form-control-cadastro" placeholder="Ex: João Silva" />
-                    </div>
-                    <div className="form-col">
-                        <label className="form-label-cadastro">CPF</label>
-                        <input type="text" className="form-control-cadastro" placeholder="000.000.000-00" />
-                    </div>
-                </div>
 
-                <div className="form-row">
-                    <div className="form-col">
-                        <label className="form-label-cadastro">Telefone</label>
-                        <input type="text" className="form-control-cadastro" placeholder="(00) 00000-0000" />
-                    </div>
-                    <div className="form-col">
-                        <label className="form-label-cadastro">Email</label>
-                        <input type="email" className="form-control-cadastro" placeholder="exemplo@email.com" />
-                    </div>
-                </div>
+                {/* ETAPA 1: DADOS DE ACESSO */}
+                {step === 1 && (
+                    <div className="step-content fade-in">
+                        <div className="form-row">
+                            <div className="form-col">
+                                <label className="form-label-cadastro">Email</label>
+                                <input 
+                                    name="email" 
+                                    value={formData.email} 
+                                    onChange={handleChange}
+                                    type="email" 
+                                    className="form-control-cadastro" 
+                                    placeholder="exemplo@email.com" 
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-col">
+                                <label className="form-label-cadastro">Senha</label>
+                                <div className="password-input-container">
+                                    <input 
+                                        name="senha"
+                                        value={formData.senha} 
+                                        onChange={handleChange}
+                                        type={showSenha ? "text" : "password"} 
+                                        className="form-control-cadastro" 
+                                        placeholder="Mínimo 6 caracteres"
+                                        required
+                                    />
+                                    <button 
+                                        type="button" 
+                                        className="btn-toggle-password" 
+                                        onClick={toggleShowSenha}
+                                    >
+                                        <i className={showSenha ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="form-col">
+                                <label className="form-label-cadastro">Confirmar Senha</label>
+                                <div className="password-input-container">
+                                    <input 
+                                        name="confirmarSenha"
+                                        value={formData.confirmarSenha} 
+                                        onChange={handleChange}
+                                        type={showSenha ? "text" : "password"} 
+                                        className="form-control-cadastro" 
+                                        placeholder="Repita a senha"
+                                        required
+                                
+                                        
 
-              
-                <div className="form-row">
-                    <div className="form-col">
-                        <label className="form-label-cadastro">Senha</label>
-                        <div className="password-input-container">
-                            <input 
-                                type={showSenha ? "text" : "password"} 
-                                className="form-control-cadastro" 
-                                placeholder="********"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                            />
-                            <button 
-                                type="button" 
-                                className="btn-toggle-password" 
-                                onClick={toggleShowSenha}
-                                aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
-                            >
-                                <i className={showSenha ? "bi bi-eye-slash" : "bi bi-eye"}></i>
-                            </button>
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
+                )}
 
-                    <div className="form-col">
-                        <label className="form-label-cadastro">Confirmar Senha</label>
-                        <div className="password-input-container">
-                            <input 
-                                type={showConfirmar ? "text" : "password"} 
-                                className="form-control-cadastro" 
-                                placeholder="********"
-                                value={confirmarSenha}
-                                onChange={(e) => setConfirmarSenha(e.target.value)}
-                            />
-                            <button 
-                                type="button" 
-                                className="btn-toggle-password" 
-                                onClick={toggleShowConfirmar}
-                                aria-label={showConfirmar ? "Ocultar senha" : "Mostrar senha"}
-                            >
-                                <i className={showConfirmar ? "bi bi-eye-slash" : "bi bi-eye"}></i>
-                            </button>
+                {/* ETAPA 2: DADOS PESSOAIS */}
+                {step === 2 && (
+                    <div className="step-content fade-in">
+                        <div className="form-row">
+                            <div className="form-col">
+                                <label className="form-label-cadastro">Nome Completo</label>
+                                <input 
+                                    name="nome"
+                                    value={formData.nome} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                    placeholder="Ex: João Silva" 
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-col">
+                                <label className="form-label-cadastro">CPF</label>
+                                <input 
+                                    name="cpf"
+                                    value={formData.cpf} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                    placeholder="000.000.000-00" 
+                                    required
+                                />
+                            </div>
+                            <div className="form-col">
+                                <label className="form-label-cadastro">Telefone</label>
+                                <input 
+                                    name="telefone"
+                                    value={formData.telefone} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                    placeholder="(00) 00000-0000" 
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-              
+                )}
+
+                {/* ETAPA 3: ENDEREÇO */}
+                {step === 3 && (
+                    <div className="step-content fade-in">
+                        <div className="form-row">
+                            <div className="form-col col-small">
+                                <label className="form-label-cadastro">CEP</label>
+                                <input 
+                                    name="cep"
+                                    value={formData.cep} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                    placeholder="00000-000" 
+                                />
+                            </div>
+                            <div className="form-col col-medium">
+                                <label className="form-label-cadastro">Cidade</label>
+                                <input 
+                                    name="cidade"
+                                    value={formData.cidade} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                />
+                            </div>
+                            <div className="form-col col-medium">
+                                <label className="form-label-cadastro">Bairro</label>
+                                <input 
+                                    name="bairro"
+                                    value={formData.bairro} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-col col-large">
+                                <label className="form-label-cadastro">Rua</label>
+                                <input 
+                                    name="rua"
+                                    value={formData.rua} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                />
+                            </div>
+                            <div className="form-col col-small">
+                                <label className="form-label-cadastro">Número</label>
+                                <input 
+                                    name="numero"
+                                    value={formData.numero} 
+                                    onChange={handleChange}
+                                    type="text" 
+                                    className="form-control-cadastro" 
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {erro && <div className="error-message">{erro}</div>}
-
-                <h3 className="section-title">Endereço</h3>
-
-                <div className="form-row">
-                    <div className="form-col col-small">
-                        <label className="form-label-cadastro">CEP</label>
-                        <input type="text" className="form-control-cadastro" placeholder="00000-000" />
-                    </div>
-                    <div className="form-col col-medium">
-                        <label className="form-label-cadastro">Cidade</label>
-                        <input type="text" className="form-control-cadastro" />
-                    </div>
-                    <div className="form-col col-medium">
-                        <label className="form-label-cadastro">Bairro</label>
-                        <input type="text" className="form-control-cadastro" />
-                    </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-col col-large">
-                        <label className="form-label-cadastro">Rua</label>
-                        <input type="text" className="form-control-cadastro" />
-                    </div>
-                    <div className="form-col col-small">
-                        <label className="form-label-cadastro">Número</label>
-                        <input type="text" className="form-control-cadastro" />
-                    </div>
-                </div>
                 
+                {/* BOTÕES DE NAVEGAÇÃO */}
                 <div className="button-group">
-                    <button type="submit" className="btn-registrar">
-                        Cadastrar
-                    </button>
                     
-                    <Link to="/" className="btn-cancelar">
-                        Cancelar
-                    </Link>
+                    {/* Botão Voltar (Aparece apenas nas etapas 2 e 3) */}
+                    {step > 1 && (
+                        <button type="button" onClick={prevStep} className="btn-voltar">
+                            Voltar
+                        </button>
+                    )}
+
+                    {/* Botão Cancelar (Aparece apenas na etapa 1) */}
+                    {step === 1 && (
+                        <Link to="/" className="btn-cancelar">
+                            Cancelar
+                        </Link>
+                    )}
+
+                    {/* Botão Próximo (Etapas 1 e 2) ou Cadastrar (Etapa 3) */}
+                    {step < 3 ? (
+                        <button type="button" onClick={nextStep} className="btn-registrar">
+                            Próximo
+                        </button>
+                    ) : (
+                        <button type="submit" className="btn-registrar" disabled={loading}>
+                            {loading ? 'Cadastrando...' : 'Finalizar Cadastro'}
+                        </button>
+                    )}
 
                 </div>
 
@@ -140,7 +249,6 @@ function Cadastro() {
 
         </div>
       </div>
-
     </>
   );
 }

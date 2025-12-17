@@ -1,127 +1,157 @@
+/* Container Principal */
 .cadastro-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
+    background-image: url('/images/fundo.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     padding: 20px;
-    background-color: #f0f2f5; 
 }
 
+/* Card Branco do Formulário */
 .cadastro-box {
-    background-color: #ffffff;
-    width: 100%;
-    max-width: 900px; 
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 700px; 
+    display: flex;
+    flex-direction: column;
 }
 
 .cadastro-title {
-    color: #333;
-    font-size: 1.8rem;
-    font-weight: 700;
     text-align: center;
-    margin-bottom: 30px;
-}
-
-.section-title {
-    font-size: 1.2rem;
-    font-weight: 700;
     color: #333;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee; 
-    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 700;
 }
 
+/* --- INDICADOR DE ETAPAS --- */
+.steps-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2; /* Ficar acima da linha */
+    position: relative;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    color: #666;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+    border: 2px solid #fff;
+}
+
+.step-label {
+    font-size: 0.85rem;
+    color: #999;
+    font-weight: 500;
+}
+
+/* Estado Ativo do Passo */
+.step-item.active .step-circle {
+    background-color: #007bff; 
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.step-item.active .step-label {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Linha Conectora */
+.step-line {
+    flex: 1;
+    height: 3px;
+    background-color: #ddd;
+    margin: 0 10px;
+    margin-bottom: 20px; /* Ajuste para alinhar com o circulo */
+}
+
+/* Animação suave entre telas */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- FORMULÁRIO --- */
 .form-row {
     display: flex;
-    gap: 20px; 
+    gap: 15px;
     margin-bottom: 15px;
 }
 
 .form-col {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 1; 
 }
 
-.col-small { flex: 1; } 
-.col-medium { flex: 2; } 
-.col-large { flex: 4; }  
+/* Tamanhos específicos para colunas */
+.col-small { flex: 1; }
+.col-medium { flex: 2; }
+.col-large { flex: 3; }
 
 .form-label-cadastro {
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 8px;
     font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .form-control-cadastro {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    color: #495057;
-    background-color: #fcfcfc;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
 }
 
 .form-control-cadastro:focus {
-    border-color: #027BD1;
+    border-color: #007bff;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(2, 123, 209, 0.1);
+    background-color: #fff;
 }
 
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.btn-registrar {
-    background-color: #027BD1;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-registrar:hover {
-    background-color: #0056b3;
-}
-
-.btn-cancelar {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-cancelar:hover {
-    background-color: #5a6268;
-    color: white;
-    text-decoration: none;
-}
-
+/* Input de Senha com Olho */
 .password-input-container {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.password-input-container .form-control-cadastro {
-    padding-right: 45px;
+.password-input-container input {
+    width: 100%;
+    padding-right: 40px; /* Espaço para o ícone */
 }
 
 .btn-toggle-password {
@@ -130,32 +160,87 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #6c757d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    transition: color 0.2s;
+    color: #666;
+    font-size: 1.2rem;
 }
 
-.btn-toggle-password:hover {
-    color: #027BD1;
-}
-
+/* Mensagem de Erro */
 .error-message {
     color: #dc3545;
     background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 5px;
     margin-bottom: 15px;
-    font-size: 0.9rem;
     text-align: center;
+    font-size: 0.9rem;
 }
 
-@media (max-width: 768px) {
+/* --- BOTÕES --- */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.btn-registrar {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    transition: background 0.3s;
+}
+
+.btn-registrar:hover {
+    background-color: #0056b3;
+}
+
+.btn-registrar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-voltar, .btn-cancelar {
+    background-color: #e2e6ea;
+    color: #333;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.btn-voltar:hover, .btn-cancelar:hover {
+    background-color: #dbe0e5;
+    color: #000;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
     .form-row {
         flex-direction: column;
         gap: 10px;
+    }
+    
+    .cadastro-box {
+        padding: 20px;
+    }
+    
+    .steps-indicator {
+        margin-bottom: 20px;
+    }
+
+    .step-label {
+        display: none; /* Esconde texto em telas muito pequenas */
     }
 }
