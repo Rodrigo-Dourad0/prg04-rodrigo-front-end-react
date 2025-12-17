@@ -8,6 +8,12 @@ export function useCadastro() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
 
+
+  const estadosBr = [
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 
+    'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+  ]
+
   const [formData, setFormData] = useState({
     email: '', senha: '', confirmarSenha: '',
     nome: '', cpf: '', telefone: '',
@@ -92,6 +98,7 @@ export function useCadastro() {
     handleChange,
     handleFormSubmit, 
     prevStep, 
+    estadosBr,
     showSenha,
     toggleShowSenha,
     erro,
