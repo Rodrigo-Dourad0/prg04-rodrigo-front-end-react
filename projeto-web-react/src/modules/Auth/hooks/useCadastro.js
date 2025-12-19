@@ -32,6 +32,8 @@ export function useCadastro() {
     if (step === 1) {
         if (!formData.email || !formData.senha) return setErro("Preencha email e senha.");
         if (formData.senha !== formData.confirmarSenha) return setErro("As senhas não coincidem.");
+        if (formData.senha.length < 6)  return setErro("A senha deve ter pelo menos 6 caracteres.");
+  
     }
     if (step === 2) {
         if (!formData.nome || !formData.cpf) return setErro("Preencha Nome e CPF.");
