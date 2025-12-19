@@ -6,7 +6,7 @@ export function useSejaParceiro() {
   const navigate = useNavigate();
   
   // FIXO PARA TESTE: Quando tiver login, pega o ID real do usuário logado
-  const usuarioId = 1; 
+  const usuarioId = 3; 
 
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');

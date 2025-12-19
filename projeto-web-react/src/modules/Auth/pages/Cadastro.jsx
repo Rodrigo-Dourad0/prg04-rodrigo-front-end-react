@@ -128,6 +128,7 @@ function Cadastro() {
                                     className="form-control-cadastro" 
                                     placeholder="000.000.000-00" 
                                     required
+                                    maxLength={14}
                                 />
                             </div>
                             <div className="form-col">
@@ -139,6 +140,7 @@ function Cadastro() {
                                     type="text" 
                                     className="form-control-cadastro" 
                                     placeholder="(00) 00000-0000" 
+                                    maxLength={16}
                                 />
                             </div>
                         </div>
@@ -159,6 +161,7 @@ function Cadastro() {
                                     type="text" 
                                     className="form-control-cadastro" 
                                     placeholder="00000-000" 
+                                    maxLength={9}
                                 />
                             </div>
 

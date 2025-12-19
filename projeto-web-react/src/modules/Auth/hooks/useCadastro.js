@@ -14,18 +14,60 @@ export function useCadastro() {
     'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
   ]
 
+
+
   const [formData, setFormData] = useState({
     email: '', senha: '', confirmarSenha: '',
     nome: '', cpf: '', telefone: '',
     cep: '', rua: '', numero: '', bairro: '', cidade: '', estado: ''
   });
 
+
+
+
   const [showSenha, setShowSenha] = useState(false);
+
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    let valorFormatado = value;
+
+    if (name === 'cpf') {
+      valorFormatado = mCPF(value);
+    } 
+    
+    if (name === 'telefone') {
+      valorFormatado = mTel(value);
+    }
+
+    if (name === 'cep') {
+      valorFormatado = value.replace(/\D/g, "").replace(/^(\d{5})(\d)/, "$1-$2").slice(0, 9);
+    }
+
+    setFormData(prev => ({ ...prev, [name]: valorFormatado }));
   };
+
+  
+ const mCPF = (value) => {
+    return value
+      .replace(/\D/g, "") // Remove tudo que não é dígito
+      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 3 primeiros dígitos
+      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 6 primeiros dígitos
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Coloca hífen antes dos últimos 2 dígitos
+      .slice(0, 14);
+  };
+
+  const mTel = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Coloca parênteses no DDD
+      .replace(/(\d)(\d{4})$/, "$1-$2") // Coloca hífen no final
+      .slice(0, 16); // Limita para (00) 90000-0000 ou (00) 0000-0000
+  };
+
+
 
   // --- LÓGICA DE VALIDAÇÃO E AVANÇO ---
   const nextStep = () => {
@@ -36,7 +78,12 @@ export function useCadastro() {
   
     }
     if (step === 2) {
-        if (!formData.nome || !formData.cpf) return setErro("Preencha Nome e CPF.");
+        if (!formData.nome || !formData.cpf || !formData.telefone) return setErro("Nome, CPF e Telefone são obrigatórios.");
+    
+        if(formData.cpf.length < 14) return setErro("Digite um CPF válido.")
+        if(formData.telefone.length < 14) return setErro("Digite um número de telefone válido.")
+    
+
     }
     setErro('');
     setStep(prev => prev + 1);
@@ -45,8 +92,15 @@ export function useCadastro() {
   const prevStep = () => setStep(prev => prev - 1);
   const toggleShowSenha = () => setShowSenha(!showSenha);
 
+
+
   // --- ENVIO FINAL PARA API ---
   const enviarDadosParaApi = async () => {
+
+    if (!formData.cep || !formData.rua || !formData.numero || !formData.bairro || !formData.cidade || !formData.estado) {
+       return setErro("Por favor, preencha todos os campos do endereço.");
+    } 
+
     setErro('');
     setLoading(true);
 
@@ -82,6 +136,8 @@ export function useCadastro() {
     }
   };
 
+
+
   
   
   const handleFormSubmit = (e) => {
@@ -93,6 +149,11 @@ export function useCadastro() {
         enviarDadosParaApi(); 
     }
   };
+
+
+
+
+
 
   return {
     step,
