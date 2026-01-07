@@ -9,30 +9,38 @@ import Atividade4 from './modules/Atividades/pages/Atividade4';
 import CreateTour from './modules/Tours/pages/CreateTour';
 import AdministracaoUsuarios from './modules/Admin/pages/AdministracaoUsuarios';
 import SejaParceiro from './modules/Tours/pages/SejaParceiro';
-
+import { AuthProvider } from './context/AuthContext';
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
 
-        <Route path="/cadastro" element={<Cadastro />} />
+    <AuthProvider>
 
-        <Route path="/admin" element={<Admin />} />
+      <BrowserRouter>
 
-        <Route path="/admin/usuarios" element={<AdministracaoUsuarios />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/seja-parceiro" element={<SejaParceiro />} />
+          <Route path="/cadastro" element={<Cadastro />} />
 
-        <Route path="/CreateTours" element={<CreateTour />} />
+          <Route path="/admin" element={<Admin />} />
 
-        <Route path="/atividade-3" element={<Atividade3 />} />
+          <Route path="/admin/usuarios" element={<AdministracaoUsuarios />} />
 
-        <Route path="/atividade-4" element={<Atividade4 />} />
+          <Route path="/seja-parceiro" element={<SejaParceiro />} />
+
+          <Route path="/CreateTours" element={<CreateTour />} />
+
+          <Route path="/atividade-3" element={<Atividade3 />} />
+
+          <Route path="/atividade-4" element={<Atividade4 />} />
 
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+
+      </BrowserRouter>
+      
+    </AuthProvider>
+
   );
 }
 
