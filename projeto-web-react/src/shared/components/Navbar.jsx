@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
 import LoginModal from '../../modules/Auth/components/LoginModal';
+import { AuthContext } from '../../context/AuthContext';
 
 function Navbar() {
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const { authenticated, logout } = useContext(AuthContext);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,24 +63,54 @@ function Navbar() {
                 </li>
                 <li className="navbar-item">
                     <Link to="/seja-parceiro" className="nav-link fw-semibold nav-link-custom">
-                    Seja Parceiro
+                    Seja Parteiro
                     </Link>
                  </li>
             </ul>
             
             <div className="d-flex align-items-center gap-2">
-                <button 
-                    onClick={handleOpenLogin} 
-                    className="btn text-decoration-none fw-bold login-link bg-transparent border-0"
-                >
-                    Login
-                </button>
+                {!authenticated ? (
+                    <>
+                        <button 
+                            onClick={handleOpenLogin} 
+                            className="btn text-decoration-none fw-bold login-link bg-transparent border-0"
+                        >
+                            Login
+                        </button>
 
-                <Link 
-                    to="/Cadastro" className="btn fw-bold rounded-pill px-4 btn-signup" onClick={handleCloseLogin}>
-                    Cadastre-se
-                </Link>
-
+                        <Link 
+                            to="/Cadastro" 
+                            className="btn fw-bold rounded-pill px-4 btn-signup" 
+                            onClick={handleCloseLogin}
+                        >
+                            Cadastre-se
+                        </Link>
+                    </>
+                ) : (
+                    <div className="dropdown">
+                        <button 
+                            className="btn border-0 bg-transparent p-0" 
+                            type="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                        >
+                            <i className="bi bi-person-circle fs-2 text-dark"></i>
+                        </button>
+                        <ul className="dropdown-menu dropdown-menu-end shadow border-0">
+                            <li>
+                                <Link className="dropdown-item fw-semibold" to="/perfil">
+                                    Meu Perfil
+                                </Link>
+                            </li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li>
+                                <button className="dropdown-item text-danger fw-bold" onClick={logout}>
+                                    Sair
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                )}
             </div>
             </div>
         </div>

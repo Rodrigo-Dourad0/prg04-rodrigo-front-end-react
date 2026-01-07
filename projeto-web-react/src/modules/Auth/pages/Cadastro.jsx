@@ -19,7 +19,7 @@ function Cadastro() {
 
   return (
     <>
-      <Navbar />
+      
 
       <div className="cadastro-wrapper">
         <div className="cadastro-box">

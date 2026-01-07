@@ -8,7 +8,7 @@ function Admin() {
 
   return (
     <>
-      <Navbar />
+     
       
       <div className="container dashboard-container text-center">
         

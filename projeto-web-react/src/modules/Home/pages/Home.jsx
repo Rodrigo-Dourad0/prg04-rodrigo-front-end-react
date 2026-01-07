@@ -10,8 +10,7 @@ import '../styles/home-page.css';
 function Home() {
   return (
     <>
-    <Navbar />
-      
+    
     <Hero />
 
     <Stats />

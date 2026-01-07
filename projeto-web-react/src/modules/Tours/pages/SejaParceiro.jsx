@@ -7,7 +7,7 @@ function SejaParceiro() {
 
   return (
     <>
-      <Navbar />
+      
       
       <div className="parceiro-wrapper">
         <div className="parceiro-card">

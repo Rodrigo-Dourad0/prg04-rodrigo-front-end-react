@@ -18,7 +18,7 @@ function AdministracaoUsuarios() {
 
   return (
     <>
-      <Navbar />
+     
       <div className="container mt-5">
         <h1 className="mb-4">Administração de Usuários</h1>
         

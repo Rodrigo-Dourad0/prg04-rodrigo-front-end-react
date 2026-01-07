@@ -5,7 +5,7 @@ import '../styles/atividade3.css';
 function Atividade3() {
   return (
     <>
-      <Navbar />
+    
       <main>
         <article>
             <h2>Página SandBox</h2>

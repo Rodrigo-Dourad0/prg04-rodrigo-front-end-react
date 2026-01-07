@@ -5,7 +5,7 @@ import '../styles/atividade4.css';
 function Atividade4() {
   return (
     <>
-      <Navbar />
+      
       
       <main>
         <h1>Plataforma Web para Reserva de Excursões: Roteiro Livre</h1>
