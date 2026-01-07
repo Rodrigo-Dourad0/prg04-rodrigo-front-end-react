@@ -123,7 +123,7 @@ export function useCadastro() {
           }
         };
         
-        await api.post('/usuarios/cadastrar', payload);
+        await api.post('/usuarios', payload);
         alert('Cadastro realizado com sucesso!');
         navigate('/'); 
 
