@@ -1,0 +1,17 @@
+.profile-page .card {
+    border-radius: 20px;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.profile-page .btn-outline-primary {
+    border-width: 2px;
+}
+
+.profile-page .text-muted {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
