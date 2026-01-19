@@ -84,3 +84,13 @@
     color: #e68900 !important;
     transform: scale(1.05);    
 }
+
+.dropdown-menu-end {
+    right: 0 !important;
+    left: auto !important;
+}
+
+.custom-dropdown {
+    margin-top: 10px !important;
+    min-width: 150px;
+}

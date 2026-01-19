@@ -63,7 +63,7 @@ function Navbar() {
                 </li>
                 <li className="navbar-item">
                     <Link to="/seja-parceiro" className="nav-link fw-semibold nav-link-custom">
-                    Seja Parteiro
+                    Seja Parceiro
                     </Link>
                  </li>
             </ul>
