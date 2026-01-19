@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext , useEffect} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
 import LoginModal from '../../modules/Auth/components/LoginModal';
@@ -10,6 +10,20 @@ function Navbar() {
   
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.openLogin) {
+      setShowLoginModal(true);
+   
+      window.history.replaceState({}, document.title);
+     
+      setTimeout(() => {
+      alert("Cadastro de parceiro realizado! Faça login novamente para acessar o painel.");
+    }, 150);
+
+    }
+  }, [location]);
+
 
   const handleOpenLogin = () => setShowLoginModal(true);
   const handleCloseLogin = () => setShowLoginModal(false);

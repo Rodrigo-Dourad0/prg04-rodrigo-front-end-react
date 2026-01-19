@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState , useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../shared/services/api';
+import { AuthContext } from '../../../context/AuthContext';
 
 export function useSejaParceiro() {
+
   const navigate = useNavigate();
-  
-  // FIXO PARA TESTE: Quando tiver login, pega o ID real do usuário logado
-  const usuarioId = 7; 
+  const { logout } = useContext(AuthContext);  
 
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
@@ -23,23 +23,38 @@ export function useSejaParceiro() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErro('');
+      e.preventDefault();
+      setLoading(true);
+      setErro('');
 
-    try {
+      try {
+       
+        const token = sessionStorage.getItem('token');
+
+
+        await api.post('/usuarios/tornar-organizador', form, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
      
-      await api.post(`/usuarios/tornar-organizador/${usuarioId}`, form);
-      
-      alert("Sucesso! Agora você é um Organizador.");
-      navigate('/'); 
-    } catch (error) {
-      console.error(error);
-      const msg = error.response?.data?.message || "Erro ao processar solicitação.";
-      setErro(msg);
-    } finally {
-      setLoading(false);
-    }
+        alert("Cadastro de parceiro realizado!");
+        
+        // Forçar logout para que as novas permissões sejam aplicadas no próximo login
+        logout();
+        
+        // Redirecionar para login com a mensagem solicitada
+        
+      navigate('/', { state: { openLogin: true } });
+        
+      } catch (error) {
+        console.error(error);
+        const msg = error.response?.data?.message || "Erro ao processar solicitação.";
+        setErro(msg);
+      } finally {
+        setLoading(false);
+      }
   };
 
   return { form, handleChange, handleSubmit, loading, erro };
