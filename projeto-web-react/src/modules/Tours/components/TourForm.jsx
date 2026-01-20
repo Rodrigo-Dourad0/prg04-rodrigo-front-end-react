@@ -35,6 +35,7 @@ function TourForm({ onSubmit }) {
     e.preventDefault();
     
     if (!formData.imagem) {
+      
         alert("Por favor, selecione uma imagem de capa.");
         return;
     }

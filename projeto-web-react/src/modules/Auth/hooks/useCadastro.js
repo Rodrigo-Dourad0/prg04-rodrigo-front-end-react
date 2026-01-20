@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../shared/services/api';
+import { toast } from 'react-toastify';
+
 
 export function useCadastro() {
   const navigate = useNavigate();
@@ -124,7 +126,7 @@ export function useCadastro() {
         };
         
         await api.post('/usuarios', payload);
-        alert('Cadastro realizado com sucesso!');
+        toast.success("Cadastro realizado com sucesso!");
         navigate('/'); 
 
     } catch (error) {

@@ -15,6 +15,9 @@ import AdministracaoUsuarios from './modules/Admin/pages/AdministracaoUsuarios';
 import SejaParceiro from './modules/Tours/pages/SejaParceiro';
 import Perfil from './modules/User/pages/Perfil';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const PrivateRoute = ({ children }) => {
   const { authenticated, loading } = useContext(AuthContext);
 
@@ -49,6 +52,20 @@ function App() {
           <Route path="/atividade-3" element={<Atividade3 />} />
           <Route path="/atividade-4" element={<Atividade4 />} />
         </Routes>
+
+        <ToastContainer 
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
       </BrowserRouter>
     </AuthProvider>
   );

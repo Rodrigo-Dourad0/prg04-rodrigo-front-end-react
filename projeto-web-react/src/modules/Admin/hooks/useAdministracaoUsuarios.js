@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../../../shared/services/api';
+import { toast } from 'react-toastify';
 
 export const useAdministracaoUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -21,7 +22,7 @@ export const useAdministracaoUsuarios = () => {
       setUsuarios(response.data.content || response.data);
     } catch (error) {
       console.error("Erro ao carregar usuários:", error);
-      alert("Erro ao buscar lista de usuários.");
+      toast.error("Erro ao buscar lista de usuários.");
     } finally {
       setLoading(false);
     }
@@ -33,10 +34,10 @@ export const useAdministracaoUsuarios = () => {
       try {
         await api.delete(`/usuarios/${id}`);
         setUsuarios((prev) => prev.filter((user) => user.id !== id));
-        alert("Usuário excluído com sucesso!");
+        toast.success("Usuário excluído com sucesso!");
       } catch (error) {
         console.error("Erro ao excluir:", error);
-        alert("Erro ao excluir usuário.");
+        toast.error("Erro ao excluir usuário.");
       }
     }
   };
@@ -66,10 +67,10 @@ export const useAdministracaoUsuarios = () => {
       );
 
       setEditingId(null);
-      alert("Usuário atualizado com sucesso!");
+      toast.success("Usuário atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar:", error);
-      alert("Erro ao atualizar usuário.");
+      toast.error("Erro ao atualizar usuário.");
     }
   };
 

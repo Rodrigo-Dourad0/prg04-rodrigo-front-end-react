@@ -2,6 +2,7 @@ import { useState , useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../shared/services/api';
 import { AuthContext } from '../../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 export function useSejaParceiro() {
 
@@ -38,13 +39,10 @@ export function useSejaParceiro() {
           }
         });
         
-     
-        alert("Cadastro de parceiro realizado!");
-        
-        // Forçar logout para que as novas permissões sejam aplicadas no próximo login
+        toast.success("Cadastro de parceiro realizado! Faça login novamente para acessar o painel.");
         logout();
         
-        // Redirecionar para login com a mensagem solicitada
+       
         
       navigate('/', { state: { openLogin: true } });
         

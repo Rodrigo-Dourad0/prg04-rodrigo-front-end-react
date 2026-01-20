@@ -16,10 +16,6 @@ function Navbar() {
       setShowLoginModal(true);
    
       window.history.replaceState({}, document.title);
-     
-      setTimeout(() => {
-      alert("Cadastro de parceiro realizado! Faça login novamente para acessar o painel.");
-    }, 150);
 
     }
   }, [location]);
