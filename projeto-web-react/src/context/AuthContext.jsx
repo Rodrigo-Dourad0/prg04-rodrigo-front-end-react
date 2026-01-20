@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }) => {
                 email: data.email,
                 nomeCompleto: data.nome, 
                 telefone: data.telefone,
-                endereco: data.endereco
+                endereco: data.endereco,
+                organizadorAtivo: data.organizadorAtivo
             };
 
             
