@@ -11,7 +11,8 @@ function Perfil() {
         formData,
         handleChange,
         handleSave,
-        loading
+        loading,
+        estadosBr
     } = usePerfil();
 
     if (!user) return <div className="container mt-5 text-center">Carregando dados do perfil...</div>;
@@ -38,6 +39,7 @@ function Perfil() {
             <div className="container perfil-content">
                 <div className="row justify-content-center">
                     
+                    {/* Coluna da Esquerda: Card Principal (Foto, Nome, Ações) */}
                     <div className="col-lg-4 text-center">
                         <div className="card shadow border-0 card-perfil-main p-4">
                             <div className="avatar-wrapper mx-auto shadow">
@@ -100,6 +102,7 @@ function Perfil() {
                                 )}
                             </div>
 
+                            {/* Botão Seja Parceiro (Aparece apenas para quem NÃO é organizador) */}
                             {!user.organizadorAtivo && !isEditing && (
                                 <div className="mt-4 pt-3 border-top">
                                     <p className="small text-muted mb-2">Gostaria de criar roteiros?</p>
@@ -114,6 +117,7 @@ function Perfil() {
                         </div>
                     </div>
 
+                    {/* Coluna da Direita: Detalhes e Painéis */}
                     <div className="col-lg-7">
                         <div className="card shadow border-0 card-perfil-details p-4 h-100">
                             <h5 className="fw-bold border-bottom pb-2 mb-4">
@@ -121,23 +125,29 @@ function Perfil() {
                             </h5>
                             
                             <div className="row gy-4">
+                                {/* Telefone */}
                                 <div className="col-md-12">
                                     <div className="d-flex align-items-center gap-3">
+                                        <div className="icon-box bg-light text-primary">
+                                            <i className="bi bi-telephone"></i>
+                                        </div>
                                         <div className="w-100">
                                             {isEditing ? (
                                                 <>
-                                                    <label className="text-primary mb-1">Telefone</label>
+                                                    <label className="form-label small text-muted mb-1">Telefone</label>
                                                     <input 
                                                         type="text" 
                                                         name="telefone"
                                                         className="form-control"
                                                         value={formData.telefone}
                                                         onChange={handleChange}
+                                                        maxLength={15}
+                                                        placeholder="(00) 00000-0000"
                                                     />
                                                 </>
                                             ) : (
                                                 <>
-                                                    <p className="small text-primary mb-1">Telefone</p>
+                                                    <p className="small text-muted mb-0">Telefone</p>
                                                     <p className="fw-semibold mb-0">{user.telefone || 'Não informado'}</p>
                                                 </>
                                             )}
@@ -145,17 +155,28 @@ function Perfil() {
                                     </div>
                                 </div>
 
+                                {/* Endereço */}
                                 <div className="col-12 mt-4">
                                     <div className="d-flex align-items-start gap-3">
-                                    
+                                        <div className="icon-box bg-light text-primary mt-1">
+                                            <i className="bi bi-geo-alt"></i>
+                                        </div>
                                         <div className="w-100">
                                             {isEditing ? (
                                                 <>
-                                                    <h6 className="text-primary mb-3">Endereço</h6>
+                                                    <h6 className="text-muted mb-3">Endereço</h6>
                                                     <div className="row g-3">
                                                         <div className="col-md-3">
                                                             <label className="form-label small text-muted">CEP</label>
-                                                            <input type="text" name="cep" className="form-control" value={formData.cep} onChange={handleChange} />
+                                                            <input 
+                                                                type="text" 
+                                                                name="cep" 
+                                                                className="form-control" 
+                                                                value={formData.cep} 
+                                                                onChange={handleChange}
+                                                                placeholder="00000-000"
+                                                                maxLength={9} 
+                                                            />
                                                         </div>
                                                         <div className="col-md-7">
                                                             <label className="form-label small text-muted">Rua</label>
@@ -175,13 +196,23 @@ function Perfil() {
                                                         </div>
                                                         <div className="col-md-2">
                                                             <label className="form-label small text-muted">UF</label>
-                                                            <input type="text" name="estado" className="form-control" value={formData.estado} onChange={handleChange} />
+                                                            <select 
+                                                                name="estado" 
+                                                                className="form-select"
+                                                                value={formData.estado} 
+                                                                onChange={handleChange}
+                                                            >
+                                                                <option value="">--</option>
+                                                                {estadosBr.map((uf) => (
+                                                                    <option key={uf} value={uf}>{uf}</option>
+                                                                ))}
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <p className="small text-primary mb-2">Endereço</p>
+                                                    <p className="small text-muted mb-2">Endereço</p>
                                                     <p className="fw-semibold mb-0">{renderEndereco()}</p>
                                                 </>
                                             )}
@@ -190,12 +221,15 @@ function Perfil() {
                                 </div>
                             </div>
 
+                           
+                            
+                            {/* Caso 1: Usuário é Organizador */}
                             {user.organizadorAtivo && !isEditing && (
                                 <div className="mt-5 pt-4 border-top">
                                     <h5 className="fw-bold mb-3">Painel do Organizador</h5>
                                     <div className="bg-light p-3 rounded-4">
                                         <p className="small mb-3">
-                                            <i className="bi bi-patch-check-fill text-primary me-2 p-2"></i> 
+                                            <i className="bi bi-patch-check-fill text-primary me-2"></i> 
                                             O seu perfil de parceiro está ativo e pronto para criar novas excursões.
                                         </p>
                                         <button className="btn btn-primary btn-sm rounded-pill px-4">
@@ -204,6 +238,23 @@ function Perfil() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* Caso 2: Usuário Comum */}
+                            {!user.organizadorAtivo && !isEditing && (
+                                <div className="mt-5 pt-4 border-top">
+                                    <h5 className="fw-bold mb-3">Minhas Viagens</h5>
+                                    <div className="bg-light p-3 rounded-4">
+                                        <p className="small mb-3 text-muted">
+                                            <i className="bi bi-ticket-perforated-fill text-success me-2"></i> 
+                                            Acompanhe aqui o histórico de suas próximas aventuras.
+                                        </p>
+                                        <button className="btn btn-outline-secondary btn-sm rounded-pill px-4" disabled>
+                                            Minhas Viagens (Em Breve)
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
                         </div>
                     </div>
                 </div>

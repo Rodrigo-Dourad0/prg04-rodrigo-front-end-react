@@ -3,20 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../../shared/services/api';
 import { toast } from 'react-toastify';
 
-
 export function useCadastro() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
 
-
   const estadosBr = [
     'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 
     'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
-  ]
-
-
+  ];
 
   const [formData, setFormData] = useState({
     email: '', senha: '', confirmarSenha: '',
@@ -24,13 +20,7 @@ export function useCadastro() {
     cep: '', rua: '', numero: '', bairro: '', cidade: '', estado: ''
   });
 
-
-
-
   const [showSenha, setShowSenha] = useState(false);
-
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,42 +40,34 @@ export function useCadastro() {
 
     setFormData(prev => ({ ...prev, [name]: valorFormatado }));
   };
-
   
- const mCPF = (value) => {
+  const mCPF = (value) => {
     return value
-      .replace(/\D/g, "") // Remove tudo que não é dígito
-      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 3 primeiros dígitos
-      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 6 primeiros dígitos
-      .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Coloca hífen antes dos últimos 2 dígitos
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
       .slice(0, 14);
   };
 
   const mTel = (value) => {
     return value
       .replace(/\D/g, "")
-      .replace(/^(\d{2})(\d)/g, "($1) $2") // Coloca parênteses no DDD
-      .replace(/(\d)(\d{4})$/, "$1-$2") // Coloca hífen no final
-      .slice(0, 16); // Limita para (00) 90000-0000 ou (00) 0000-0000
+      .replace(/^(\d{2})(\d)/g, "($1) $2")
+      .replace(/(\d)(\d{4})$/, "$1-$2")
+      .slice(0, 16);
   };
 
-
-
-  // --- LÓGICA DE VALIDAÇÃO E AVANÇO ---
   const nextStep = () => {
     if (step === 1) {
         if (!formData.email || !formData.senha) return setErro("Preencha email e senha.");
         if (formData.senha !== formData.confirmarSenha) return setErro("As senhas não coincidem.");
         if (formData.senha.length < 6)  return setErro("A senha deve ter pelo menos 6 caracteres.");
-  
     }
     if (step === 2) {
         if (!formData.nome || !formData.cpf || !formData.telefone) return setErro("Nome, CPF e Telefone são obrigatórios.");
-    
         if(formData.cpf.length < 14) return setErro("Digite um CPF válido.")
         if(formData.telefone.length < 14) return setErro("Digite um número de telefone válido.")
-    
-
     }
     setErro('');
     setStep(prev => prev + 1);
@@ -94,11 +76,7 @@ export function useCadastro() {
   const prevStep = () => setStep(prev => prev - 1);
   const toggleShowSenha = () => setShowSenha(!showSenha);
 
-
-
-  // --- ENVIO FINAL PARA API ---
   const enviarDadosParaApi = async () => {
-
     if (!formData.cep || !formData.rua || !formData.numero || !formData.bairro || !formData.cidade || !formData.estado) {
        return setErro("Por favor, preencha todos os campos do endereço.");
     } 
@@ -120,7 +98,7 @@ export function useCadastro() {
               bairro: formData.bairro,
               cidade: formData.cidade,
               cep: formData.cep,
-              estado: formData.estado || 'BA'
+              estado: formData.estado
             }
           }
         };
@@ -138,10 +116,6 @@ export function useCadastro() {
     }
   };
 
-
-
-  
-  
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
@@ -151,11 +125,6 @@ export function useCadastro() {
         enviarDadosParaApi(); 
     }
   };
-
-
-
-
-
 
   return {
     step,

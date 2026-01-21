@@ -10,6 +10,12 @@ export function usePerfil() {
 
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    // Lista de Estados para o Select
+    const estadosBr = [
+        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 
+        'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    ];
     
     const [formData, setFormData] = useState({
         email: '',
@@ -52,7 +58,26 @@ export function usePerfil() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        let valorFormatado = value;
+
+        // Máscara de CEP (XXXXX-XXX)
+        if (name === 'cep') {
+            valorFormatado = value
+                .replace(/\D/g, "")                 // Remove tudo que não é dígito
+                .replace(/^(\d{5})(\d)/, "$1-$2")   // Coloca o hífen
+                .slice(0, 9);                       // Limita o tamanho
+        }
+        
+  
+        if (name === 'telefone') {
+             valorFormatado = value
+              .replace(/\D/g, "")
+              .replace(/^(\d{2})(\d)/g, "($1) $2")
+              .replace(/(\d)(\d{4})$/, "$1-$2")
+              .slice(0, 16);
+        }
+
+        setFormData(prev => ({ ...prev, [name]: valorFormatado }));
     };
 
     const handleSave = async () => {
@@ -84,6 +109,7 @@ export function usePerfil() {
         formData,
         handleChange,
         handleSave,
-        loading
+        loading,
+        estadosBr 
     };
 }
