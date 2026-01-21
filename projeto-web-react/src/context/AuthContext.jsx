@@ -21,22 +21,15 @@ export const AuthProvider = ({ children }) => {
         recoverUser();
     }, []);
 
-    
     const login = async (email, senha) => {
         try {
             const response = await api.post('/login', { email, senha });
             const data = response.data; 
 
-            
             const loggedUser = {
                 token: data.token,
-                email: data.email,
-                nomeCompleto: data.nome, 
-                telefone: data.telefone,
-                endereco: data.endereco,
-                organizadorAtivo: data.organizadorAtivo
+                ...data 
             };
-
             
             sessionStorage.setItem('token', data.token);
             sessionStorage.setItem('user', JSON.stringify(loggedUser));
@@ -50,25 +43,31 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-
-    const updateUser = (newUserData) => {
-        
-        setUser(prevUser => {
-            const updated = { ...prevUser, ...newUserData };
-            sessionStorage.setItem('user', JSON.stringify(updated));
-            return updated;
-        });
-    };
-
-
     const logout = () => {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('user');
         setUser(null);
     };
 
+    
+    const updateUser = (newUserData) => {
+        setUser(prevUser => {
+          
+            const updated = { ...prevUser, ...newUserData };
+            sessionStorage.setItem('user', JSON.stringify(updated));
+            return updated;
+        });
+    };
+
     return (
-        <AuthContext.Provider value={{ authenticated: !!user, user, login, logout,updateUser, loading }}>
+        <AuthContext.Provider value={{ 
+            authenticated: !!user, 
+            user, 
+            login, 
+            logout, 
+            updateUser, 
+            loading 
+        }}>
             {children}
         </AuthContext.Provider>
     );
