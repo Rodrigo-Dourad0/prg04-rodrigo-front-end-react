@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom'; // <--- 1. IMPORTANTE
 import { usePerfil } from '../hooks/usePerfil';
 import '../styles/perfil.css';
 
 function Perfil() {
+    const navigate = useNavigate(); // <--- 2. IMPORTANTE
     const { 
         user, 
         handleLogout, 
@@ -39,7 +41,7 @@ function Perfil() {
             <div className="container perfil-content">
                 <div className="row justify-content-center">
                     
-                    {/* Coluna da Esquerda: Card Principal (Foto, Nome, Ações) */}
+                    {/* Coluna da Esquerda: Card Principal */}
                     <div className="col-lg-4 text-center">
                         <div className="card shadow border-0 card-perfil-main p-4">
                             <div className="avatar-wrapper mx-auto shadow">
@@ -102,7 +104,7 @@ function Perfil() {
                                 )}
                             </div>
 
-                            {/* Botão Seja Parceiro (Aparece apenas para quem NÃO é organizador) */}
+                            {/* Botão Seja Parceiro */}
                             {!user.organizadorAtivo && !isEditing && (
                                 <div className="mt-4 pt-3 border-top">
                                     <p className="small text-muted mb-2">Gostaria de criar roteiros?</p>
@@ -125,7 +127,7 @@ function Perfil() {
                             </h5>
                             
                             <div className="row gy-4">
-                                {/* Telefone */}
+                                {/* Campos de Texto (Telefone e Endereço) - Mantidos iguais */}
                                 <div className="col-md-12">
                                     <div className="d-flex align-items-center gap-3">
                                         <div className="icon-box bg-light text-primary">
@@ -135,15 +137,7 @@ function Perfil() {
                                             {isEditing ? (
                                                 <>
                                                     <label className="form-label small text-muted mb-1">Telefone</label>
-                                                    <input 
-                                                        type="text" 
-                                                        name="telefone"
-                                                        className="form-control"
-                                                        value={formData.telefone}
-                                                        onChange={handleChange}
-                                                        maxLength={15}
-                                                        placeholder="(00) 00000-0000"
-                                                    />
+                                                    <input type="text" name="telefone" className="form-control" value={formData.telefone} onChange={handleChange} maxLength={15} placeholder="(00) 00000-0000" />
                                                 </>
                                             ) : (
                                                 <>
@@ -155,7 +149,6 @@ function Perfil() {
                                     </div>
                                 </div>
 
-                                {/* Endereço */}
                                 <div className="col-12 mt-4">
                                     <div className="d-flex align-items-start gap-3">
                                         <div className="icon-box bg-light text-primary mt-1">
@@ -168,15 +161,7 @@ function Perfil() {
                                                     <div className="row g-3">
                                                         <div className="col-md-3">
                                                             <label className="form-label small text-muted">CEP</label>
-                                                            <input 
-                                                                type="text" 
-                                                                name="cep" 
-                                                                className="form-control" 
-                                                                value={formData.cep} 
-                                                                onChange={handleChange}
-                                                                placeholder="00000-000"
-                                                                maxLength={9} 
-                                                            />
+                                                            <input type="text" name="cep" className="form-control" value={formData.cep} onChange={handleChange} placeholder="00000-000" maxLength={9} />
                                                         </div>
                                                         <div className="col-md-7">
                                                             <label className="form-label small text-muted">Rua</label>
@@ -196,16 +181,9 @@ function Perfil() {
                                                         </div>
                                                         <div className="col-md-2">
                                                             <label className="form-label small text-muted">UF</label>
-                                                            <select 
-                                                                name="estado" 
-                                                                className="form-select"
-                                                                value={formData.estado} 
-                                                                onChange={handleChange}
-                                                            >
+                                                            <select name="estado" className="form-select" value={formData.estado} onChange={handleChange}>
                                                                 <option value="">--</option>
-                                                                {estadosBr.map((uf) => (
-                                                                    <option key={uf} value={uf}>{uf}</option>
-                                                                ))}
+                                                                {estadosBr.map((uf) => (<option key={uf} value={uf}>{uf}</option>))}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -220,10 +198,8 @@ function Perfil() {
                                     </div>
                                 </div>
                             </div>
-
-                           
                             
-                            {/* Caso 1: Usuário é Organizador */}
+                            {/* --- AQUI ESTÁ A CORREÇÃO DO BOTÃO --- */}
                             {user.organizadorAtivo && !isEditing && (
                                 <div className="mt-5 pt-4 border-top">
                                     <h5 className="fw-bold mb-3">Painel do Organizador</h5>
@@ -232,14 +208,16 @@ function Perfil() {
                                             <i className="bi bi-patch-check-fill text-primary me-2"></i> 
                                             O seu perfil de parceiro está ativo e pronto para criar novas excursões.
                                         </p>
-                                        <button className="btn btn-primary btn-sm rounded-pill px-4">
+                                        <button 
+                                            onClick={() => navigate('/gerir-roteiros')} /* <--- AÇÃO ADICIONADA */
+                                            className="btn btn-primary btn-sm rounded-pill px-4"
+                                        >
                                             Gerir Meus Roteiros
                                         </button>
                                     </div>
                                 </div>
                             )}
 
-                            {/* Caso 2: Usuário Comum */}
                             {!user.organizadorAtivo && !isEditing && (
                                 <div className="mt-5 pt-4 border-top">
                                     <h5 className="fw-bold mb-3">Minhas Viagens</h5>

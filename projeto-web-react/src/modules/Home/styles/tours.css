@@ -1,6 +1,6 @@
 .tours-section {
     padding: 80px 20px;
-    background-color: #ffffff;
+    background-color: #f8f9fa; 
 }
 
 .tours-header {
@@ -25,15 +25,122 @@
     line-height: 1.6;
 }
 
-
+/* --- GRID DE CARDS --- */
 .cards-grid-container {
+    display: grid;
+   
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 10px;
+}
+
+/* --- CARD DESIGN --- */
+.tour-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.tour-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Imagem */
+.tour-card-img-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.tour-card-img {
     width: 100%;
-    min-height: 100px;
-    
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.tour-card:hover .tour-card-img {
+    transform: scale(1.05); 
+}
+
+/* Preço Flutuante */
+.tour-price-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #027BD1;
+    font-weight: 800;
+    padding: 8px 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+}
+
+/* Corpo do Card */
+.tour-card-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tour-location {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #027BD1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tour-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.tour-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 10px 0;
+    /* Limita a 2 linhas */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tour-card-desc {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    /* Limita a 3 linhas */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Rodapé do Card */
+.tour-card-footer {
+    margin-top: auto; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
 }
 
 @media (max-width: 768px) {
     .tours-title {
         font-size: 2rem;
+    }
+    .cards-grid-container {
+        grid-template-columns: 1fr; 
     }
 }

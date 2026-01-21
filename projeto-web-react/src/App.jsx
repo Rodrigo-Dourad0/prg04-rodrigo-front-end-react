@@ -14,6 +14,8 @@ import CreateTour from './modules/Tours/pages/CreateTour';
 import AdministracaoUsuarios from './modules/Admin/pages/AdministracaoUsuarios';
 import SejaParceiro from './modules/Tours/pages/SejaParceiro';
 import Perfil from './modules/User/pages/Perfil';
+import GerirRoteiros from './modules/Tours/pages/GerirRoteiros';
+import MinhasViagens from './modules/Tours/pages/MinhasViagens';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -51,6 +53,16 @@ function App() {
           <Route path="/CreateTours" element={<CreateTour />} />
           <Route path="/atividade-3" element={<Atividade3 />} />
           <Route path="/atividade-4" element={<Atividade4 />} />
+          <Route path="/gerir-roteiros" element={<GerirRoteiros />} />
+          
+          <Route 
+            path="/minhas-viagens" 
+            element={
+              <PrivateRoute>
+                <MinhasViagens />
+              </PrivateRoute>
+            } 
+          />
         </Routes>
 
         <ToastContainer 

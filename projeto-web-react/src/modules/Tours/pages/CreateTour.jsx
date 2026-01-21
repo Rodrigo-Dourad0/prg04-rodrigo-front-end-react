@@ -1,17 +1,13 @@
 import Navbar from '../../../shared/components/Navbar';
 import TourForm from '../components/TourForm';
+import { useCreateTour } from '../hooks/useCreateTour'; 
 
 function CreateTour() {
-  
-  const handleCreateTour = (tourData) => {
-    // Conexão com o backend no futuro
-    console.log("Dados prontos para envio:", tourData);
-    alert("Teste: Viagem pronta para ser enviada! (Verifique o console F12)");
-  };
+ 
+  const { createTour, loading } = useCreateTour();
 
   return (
     <>
-      
       <div className="container mt-5 mb-5">
         <div className="row justify-content-center">
           <div className="col-lg-10">
@@ -22,7 +18,8 @@ function CreateTour() {
             
             <div className="card shadow-sm border-0 rounded-3">
               <div className="card-body p-4 p-md-5">
-                <TourForm onSubmit={handleCreateTour} />
+                
+                <TourForm onSubmit={createTour} isLoading={loading} />
               </div>
             </div>
 

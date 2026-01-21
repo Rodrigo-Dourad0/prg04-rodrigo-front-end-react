@@ -1,0 +1,61 @@
+/* Card da listagem */
+.card-viagem-row {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e9ecef;
+    background: #fff;
+}
+
+.card-viagem-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Coluna da Data (Esquerda) */
+.date-column {
+    background-color: #f8f9fa;
+    border-right: 3px solid var(--bs-primary);
+    min-width: 110px;
+}
+
+/* Tipografia */
+.display-date {
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--bs-primary);
+}
+
+.month-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--bs-primary);
+}
+
+/* Status Badges */
+.badge-status-ABERTA { background-color: #198754; }
+.badge-status-CANCELADA { background-color: #dc3545; }
+.badge-status-FINALIZADA { background-color: #6c757d; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .card-viagem-row .row {
+        flex-direction: column;
+    }
+    .date-column {
+        border-right: none;
+        border-bottom: 3px solid var(--bs-primary);
+        padding: 1rem !important;
+        flex-direction: row !important;
+        gap: 10px;
+        width: 100%;
+    }
+    .display-date { font-size: 1.8rem; }
+    .action-buttons {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: stretch;
+    }
+    .action-buttons .btn { flex: 1; }
+}
