@@ -1,33 +1,8 @@
-import { useState, useEffect } from 'react';
-import api from '../../../shared/services/api';
+import { useTours } from '../hooks/useTours';
 import '../styles/tours.css';
 
 function Tours() {
-  const [viagens, setViagens] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchViagens();
-  }, []);
-
-  const fetchViagens = async () => {
-    try {
-      const response = await api.get('/viagens');
-      const lista = response.data.content || response.data || [];
-      const viagensAbertas = lista.filter(v => v.status === 'ABERTA');
-      setViagens(viagensAbertas);
-    } catch (error) {
-      console.error("Erro ao carregar vitrine:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatData = (dataString) => {
-    if (!dataString) return '';
-    const date = new Date(dataString);
-    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
-  };
+  const { viagens, loading, formatData } = useTours();
 
   if (loading) {
     return (
@@ -59,13 +34,11 @@ function Tours() {
               {viagens.map((viagem) => (
                 <div key={viagem.id} className="tour-card">
                     <div className="tour-card-img-wrapper">
-                        
                         <img 
                           src={`https://picsum.photos/seed/${viagem.id}/800/600`} 
                           alt={viagem.titulo} 
                           className="tour-card-img"
                           onError={(e) => {
-                            // Se der erro, usa uma cor sólida ou imagem local
                             e.target.onerror = null; 
                             e.target.src = 'https://placehold.co/800x600?text=Roteiro+Livre';
                           }}
