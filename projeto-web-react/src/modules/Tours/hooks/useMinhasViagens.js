@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import api from '../../../shared/services/api';
 import { AuthContext } from '../../../context/AuthContext';
@@ -6,6 +6,8 @@ import { AuthContext } from '../../../context/AuthContext';
 export const useMinhasViagens = () => {
     const [viagens, setViagens] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [busca, setBusca] = useState('');
+    const [filtroStatus, setFiltroStatus] = useState('TODOS');
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
@@ -18,16 +20,9 @@ export const useMinhasViagens = () => {
         try {
             setLoading(true);
             const response = await api.get('/viagens');
-            
-            // O backend retorna um Page (content) ou Lista direta? 
-            // Pelo seu controller: return ResponseEntity.ok(response); onde response é Page<ViagemResponse>
-            // Então os dados estão em response.data.content
             const listaTotal = response.data.content || response.data || [];
 
-            // Filtragem no Front-end (Temporário até ter endpoint /viagens/meus-roteiros)
-            // Filtramos pelo nome do organizador ou ID se disponível
             const minhas = listaTotal.filter(v => {
-                // Tenta comparar ID se vier no DTO, senão compara nome
                 if (v.organizadorId && user.id) return v.organizadorId === user.id;
                 return v.nomeOrganizador === user.nome || v.nomeOrganizador === user.nomeCompleto;
             });
@@ -46,13 +41,12 @@ export const useMinhasViagens = () => {
         if (!window.confirm("Tem certeza que deseja cancelar esta viagem?")) return;
 
         try {
-            // O endpoint de cancelar exige o ID do organizador via param
             await api.put(`/viagens/${id}/cancelar`, null, {
                 params: { organizadorId: user.id }
             });
-            
+
             toast.success("Viagem cancelada com sucesso!");
-            fetchViagens(); // Recarrega a lista para atualizar o status
+            fetchViagens();
         } catch (error) {
             console.error("Erro ao cancelar:", error);
             const msg = error.response?.data?.message || "Erro ao cancelar viagem.";
@@ -60,10 +54,35 @@ export const useMinhasViagens = () => {
         }
     };
 
+    const filteredViagens = useMemo(() => {
+        return viagens.filter(viagem => {
+            const termo = busca.toLowerCase();
+            const matchTexto =
+                viagem.titulo?.toLowerCase().includes(termo) ||
+                viagem.destino?.toLowerCase().includes(termo);
+
+            if (!matchTexto) return false;
+
+            if (filtroStatus === 'TODOS') return true;
+            if (filtroStatus === 'CANCELADOS') return viagem.status === 'CANCELADA';
+            if (filtroStatus === 'FINALIZADOS') return viagem.status === 'FINALIZADA';
+
+            if (filtroStatus === 'ABERTOS') {
+                return viagem.status === 'ABERTA' || viagem.status === 'LOTADA';
+            }
+
+            return true;
+        });
+    }, [viagens, busca, filtroStatus]);
+
     return {
-        viagens,
+        viagens: filteredViagens,
         loading,
         handleCancelarViagem,
-        user
+        user,
+        busca,
+        setBusca,
+        filtroStatus,
+        setFiltroStatus
     };
 };

@@ -4,7 +4,16 @@ import '../styles/minhas-viagens.css';
 
 const MinhasViagens = () => {
     const navigate = useNavigate();
-    const { viagens, loading, handleCancelarViagem } = useMinhasViagens();
+
+    const {
+        viagens,
+        loading,
+        handleCancelarViagem,
+        busca,
+        setBusca,
+        filtroStatus,
+        setFiltroStatus
+    } = useMinhasViagens();
 
     if (loading) {
         return (
@@ -17,38 +26,62 @@ const MinhasViagens = () => {
 
     return (
         <div className="container mt-5 mb-5">
-            {/* Cabeçalho da Página */}
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
                 <div>
                     <h2 className="fw-bold text-dark mb-1">Meus Roteiros</h2>
                     <p className="text-muted mb-0">Gerencie suas excursões ativas e passadas</p>
                 </div>
-                <button 
-                    className="btn btn-primary rounded-pill px-4 shadow-sm" 
+                <button
+                    className="btn btn-primary rounded-pill px-4 shadow-sm"
                     onClick={() => navigate('/CreateTours')}
                 >
                     <i className="bi bi-plus-lg me-2"></i>Nova Viagem
                 </button>
             </div>
 
-            {/* Estado Vazio (Sem viagens) */}
+            <div className="card border-0 shadow-sm p-3 mb-4 rounded-4 bg-white">
+                <div className="row g-3">
+                    <div className="col-md-8">
+                        <div className="input-group">
+                            <span className="input-group-text bg-light border-0">
+                                <i className="bi bi-search text-muted"></i>
+                            </span>
+                            <input
+                                type="text"
+                                className="form-control border-0 bg-light"
+                                placeholder="Pesquisar por título ou destino..."
+                                value={busca}
+                                onChange={(e) => setBusca(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <select
+                            className="form-select border-0 bg-light fw-semibold text-secondary"
+                            value={filtroStatus}
+                            onChange={(e) => setFiltroStatus(e.target.value)}
+                        >
+                            <option value="TODOS">Todos os Roteiros</option>
+                            <option value="ABERTOS">Roteiros Abertos (Ativos)</option>
+                            <option value="FINALIZADOS">Roteiros Finalizados</option>
+                            <option value="CANCELADOS">Roteiros Cancelados</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             {viagens.length === 0 ? (
                 <div className="text-center py-5 bg-light rounded-4 border border-dashed mt-4">
-                    <i className="bi bi-map display-1 text-muted opacity-25"></i>
-                    <h4 className="mt-3 text-secondary">Nenhuma viagem encontrada</h4>
-                    <p className="text-muted">Você ainda não cadastrou nenhuma excursão.</p>
-                    <button className="btn btn-outline-primary mt-2" onClick={() => navigate('/CreateTours')}>
-                        Criar meu primeiro roteiro
-                    </button>
+                    <i className="bi bi-filter-circle display-1 text-muted opacity-25"></i>
+                    <h4 className="mt-3 text-secondary">Nenhum roteiro encontrado</h4>
+                    <p className="text-muted">Tente mudar os filtros ou crie uma nova viagem.</p>
                 </div>
             ) : (
-                /* Lista de Viagens */
                 <div className="d-flex flex-column gap-3">
                     {viagens.map((viagem) => (
                         <div key={viagem.id} className="card shadow-sm border-0 rounded-4 overflow-hidden card-viagem-row">
                             <div className="row g-0 align-items-stretch">
-                                
-                                {/* 1. Data (Esquerda) */}
                                 <div className="col-md-2 date-column d-flex flex-column justify-content-center align-items-center py-3 text-center">
                                     <span className="display-date">
                                         {new Date(viagem.dataPartida).getDate()}
@@ -61,7 +94,6 @@ const MinhasViagens = () => {
                                     </small>
                                 </div>
 
-                                {/* 2. Conteúdo Principal */}
                                 <div className="col-md-7 p-4 d-flex flex-column justify-content-center">
                                     <div className="d-flex align-items-center gap-2 mb-2">
                                         <span className={`badge rounded-pill badge-status-${viagem.status}`}>
@@ -72,9 +104,9 @@ const MinhasViagens = () => {
                                             {viagem.destino}
                                         </span>
                                     </div>
-                                    
+
                                     <h5 className="fw-bold mb-1 text-dark">{viagem.titulo}</h5>
-                                    <p className="text-muted small mb-0 text-truncate" style={{maxWidth: '90%'}}>
+                                    <p className="text-muted small mb-0 text-truncate" style={{ maxWidth: '90%' }}>
                                         {viagem.descricao || "Sem descrição disponível."}
                                     </p>
 
@@ -89,14 +121,13 @@ const MinhasViagens = () => {
                                     </div>
                                 </div>
 
-                                {/* 3. Ações (Direita) */}
                                 <div className="col-md-3 bg-light p-3 d-flex flex-column justify-content-center gap-2 border-start">
                                     <button className="btn btn-sm btn-outline-primary w-100 bg-white">
                                         <i className="bi bi-pencil-square me-2"></i>Editar
                                     </button>
-                                    
+
                                     {viagem.status !== 'CANCELADA' && (
-                                        <button 
+                                        <button
                                             className="btn btn-sm btn-outline-danger w-100 bg-white"
                                             onClick={() => handleCancelarViagem(viagem.id)}
                                         >
