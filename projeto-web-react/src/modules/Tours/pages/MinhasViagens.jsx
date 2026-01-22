@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMinhasViagens } from '../hooks/useMinhasViagens';
+import TourDetailsModal from '../components/TourDetailsModal';
 import '../styles/minhas-viagens.css';
 
 const MinhasViagens = () => {
@@ -12,7 +13,12 @@ const MinhasViagens = () => {
         busca,
         setBusca,
         filtroStatus,
-        setFiltroStatus
+        setFiltroStatus,
+        // Novos handlers
+        selectedViagem,
+        handleOpenModal,
+        handleCloseModal,
+        handleEditViagem
     } = useMinhasViagens();
 
     if (loading) {
@@ -39,6 +45,7 @@ const MinhasViagens = () => {
                 </button>
             </div>
 
+            {/* Filtros */}
             <div className="card border-0 shadow-sm p-3 mb-4 rounded-4 bg-white">
                 <div className="row g-3">
                     <div className="col-md-8">
@@ -71,6 +78,7 @@ const MinhasViagens = () => {
                 </div>
             </div>
 
+            {/* Lista */}
             {viagens.length === 0 ? (
                 <div className="text-center py-5 bg-light rounded-4 border border-dashed mt-4">
                     <i className="bi bi-filter-circle display-1 text-muted opacity-25"></i>
@@ -80,7 +88,13 @@ const MinhasViagens = () => {
             ) : (
                 <div className="d-flex flex-column gap-3">
                     {viagens.map((viagem) => (
-                        <div key={viagem.id} className="card shadow-sm border-0 rounded-4 overflow-hidden card-viagem-row">
+                        <div 
+                            key={viagem.id} 
+                            className="card shadow-sm border-0 rounded-4 overflow-hidden card-viagem-row"
+                            // Opcional: Clicar no card inteiro abre o modal também
+                            style={{cursor: 'pointer'}}
+                            onClick={() => handleOpenModal(viagem)}
+                        >
                             <div className="row g-0 align-items-stretch">
                                 <div className="col-md-2 date-column d-flex flex-column justify-content-center align-items-center py-3 text-center">
                                     <span className="display-date">
@@ -94,7 +108,7 @@ const MinhasViagens = () => {
                                     </small>
                                 </div>
 
-                                <div className="col-md-7 p-4 d-flex flex-column justify-content-center">
+                                <div className="col-md-8 p-4 d-flex flex-column justify-content-center">
                                     <div className="d-flex align-items-center gap-2 mb-2">
                                         <span className={`badge rounded-pill badge-status-${viagem.status}`}>
                                             {viagem.status}
@@ -106,10 +120,7 @@ const MinhasViagens = () => {
                                     </div>
 
                                     <h5 className="fw-bold mb-1 text-dark">{viagem.titulo}</h5>
-                                    <p className="text-muted small mb-0 text-truncate" style={{ maxWidth: '90%' }}>
-                                        {viagem.descricao || "Sem descrição disponível."}
-                                    </p>
-
+                                    
                                     <div className="d-flex gap-4 mt-3 small text-secondary">
                                         <span>
                                             <i className="bi bi-people-fill me-1"></i>
@@ -121,25 +132,31 @@ const MinhasViagens = () => {
                                     </div>
                                 </div>
 
-                                <div className="col-md-3 bg-light p-3 d-flex flex-column justify-content-center gap-2 border-start">
-                                    <button className="btn btn-sm btn-outline-primary w-100 bg-white">
-                                        <i className="bi bi-pencil-square me-2"></i>Editar
+                                {/* Botão Único de Ação */}
+                                <div className="col-md-2 bg-light p-3 d-flex flex-column justify-content-center border-start">
+                                    <button 
+                                        className="btn btn-outline-primary w-100 rounded-pill"
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Evita clique duplo se o card tiver onClick
+                                            handleOpenModal(viagem);
+                                        }}
+                                    >
+                                        <i className="bi bi-sliders me-1"></i> Gerenciar
                                     </button>
-
-                                    {viagem.status !== 'CANCELADA' && (
-                                        <button
-                                            className="btn btn-sm btn-outline-danger w-100 bg-white"
-                                            onClick={() => handleCancelarViagem(viagem.id)}
-                                        >
-                                            <i className="bi bi-x-circle me-2"></i>Cancelar
-                                        </button>
-                                    )}
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
+
+            {/* MODAL DE DETALHES */}
+            <TourDetailsModal 
+                viagem={selectedViagem}
+                onClose={handleCloseModal}
+                onCancel={handleCancelarViagem}
+                onEdit={handleEditViagem}
+            />
         </div>
     );
 };

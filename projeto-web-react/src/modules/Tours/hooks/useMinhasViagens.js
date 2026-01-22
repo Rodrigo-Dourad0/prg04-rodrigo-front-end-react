@@ -8,6 +8,10 @@ export const useMinhasViagens = () => {
     const [loading, setLoading] = useState(true);
     const [busca, setBusca] = useState('');
     const [filtroStatus, setFiltroStatus] = useState('TODOS');
+    
+    // Estado para controlar qual viagem está aberta no modal
+    const [selectedViagem, setSelectedViagem] = useState(null);
+
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
@@ -37,8 +41,24 @@ export const useMinhasViagens = () => {
         }
     };
 
+    // Abre o modal
+    const handleOpenModal = (viagem) => {
+        setSelectedViagem(viagem);
+    };
+
+    // Fecha o modal
+    const handleCloseModal = () => {
+        setSelectedViagem(null);
+    };
+
+    // Ação de Editar (Placeholder por enquanto)
+    const handleEditViagem = (viagem) => {
+        toast.info(`Editar viagem: ${viagem.titulo} (Em desenvolvimento)`);
+        
+    };
+
     const handleCancelarViagem = async (id) => {
-        if (!window.confirm("Tem certeza que deseja cancelar esta viagem?")) return;
+        if (!window.confirm("Tem certeza que deseja cancelar esta viagem? Esta ação é irreversível.")) return;
 
         try {
             await api.put(`/viagens/${id}/cancelar`, null, {
@@ -46,7 +66,8 @@ export const useMinhasViagens = () => {
             });
 
             toast.success("Viagem cancelada com sucesso!");
-            fetchViagens();
+            handleCloseModal(); // Fecha o modal após cancelar
+            fetchViagens();     // Atualiza a lista
         } catch (error) {
             console.error("Erro ao cancelar:", error);
             const msg = error.response?.data?.message || "Erro ao cancelar viagem.";
@@ -83,6 +104,10 @@ export const useMinhasViagens = () => {
         busca,
         setBusca,
         filtroStatus,
-        setFiltroStatus
+        setFiltroStatus,
+        selectedViagem,
+        handleOpenModal,
+        handleCloseModal,
+        handleEditViagem
     };
 };
