@@ -34,13 +34,15 @@ function Tours() {
               {viagens.map((viagem) => (
                 <div key={viagem.id} className="tour-card">
                     <div className="tour-card-img-wrapper">
+                        
                         <img 
-                          src={`https://picsum.photos/seed/${viagem.id}/800/600`} 
+                          src={viagem.imagemUrl || 'https://placehold.co/800x600?text=Sem+Foto'} 
                           alt={viagem.titulo} 
                           className="tour-card-img"
                           onError={(e) => {
                             e.target.onerror = null; 
-                            e.target.src = 'https://placehold.co/800x600?text=Roteiro+Livre';
+                            // Caso o link do supabase quebre ou deixe de existir, mostra isso:
+                            e.target.src = 'https://placehold.co/800x600?text=Imagem+Indisponivel';
                           }}
                         />
                         <span className="tour-price-badge">

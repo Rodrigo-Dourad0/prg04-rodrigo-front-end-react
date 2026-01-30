@@ -28,7 +28,8 @@ export const useCreateTour = () => {
                 dataRetorno: tourData.dataRetorno,
                 preco: tourData.preco,
                 vagasTotais: tourData.vagasTotais,
-                organizadorId: user.id // Injeção do ID aqui
+                imagemUrl: tourData.imagemUrl,
+                organizadorId: user.id 
             };
 
             await api.post('/viagens/criar', payload);
@@ -36,7 +37,7 @@ export const useCreateTour = () => {
             toast.success("Viagem criada com sucesso!");
             navigate('/minhas-viagens'); 
         } catch (error) {
-            console.error("Erro ao criar viagem:", error);
+            toast.error("Erro ao criar viagem:", error);
             const msg = error.response?.data?.message || "Erro ao conectar com o servidor.";
             toast.error(msg);
         } finally {
