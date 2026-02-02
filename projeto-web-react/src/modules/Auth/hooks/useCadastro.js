@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../shared/services/api';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../../context/AuthContext';
 
 export function useCadastro() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
@@ -104,8 +106,15 @@ export function useCadastro() {
         };
         
         await api.post('/usuarios', payload);
-        toast.success("Cadastro realizado com sucesso!");
-        navigate('/'); 
+        
+        const logado = await login(formData.email, formData.senha);
+
+        if (logado) {
+            toast.success("Cadastro realizado com sucesso!");
+            navigate('/'); 
+        } else {
+            navigate('/');
+        }
 
     } catch (error) {
         console.error("Erro:", error);
