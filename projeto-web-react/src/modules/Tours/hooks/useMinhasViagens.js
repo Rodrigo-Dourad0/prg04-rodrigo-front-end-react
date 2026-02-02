@@ -8,9 +8,9 @@ export const useMinhasViagens = () => {
     const [loading, setLoading] = useState(true);
     const [busca, setBusca] = useState('');
     const [filtroStatus, setFiltroStatus] = useState('TODOS');
-    
-    // Estado para controlar qual viagem está aberta no modal
     const [selectedViagem, setSelectedViagem] = useState(null);
+    const [reservas, setReservas] = useState([]);
+    const [loadingReservas, setLoadingReservas] = useState(false);
 
     const { user } = useContext(AuthContext);
 
@@ -25,14 +25,11 @@ export const useMinhasViagens = () => {
             setLoading(true);
             const response = await api.get('/viagens');
             const listaTotal = response.data.content || response.data || [];
-
             const minhas = listaTotal.filter(v => {
                 if (v.organizadorId && user.id) return v.organizadorId === user.id;
                 return v.nomeOrganizador === user.nome || v.nomeOrganizador === user.nomeCompleto;
             });
-
             setViagens(minhas);
-
         } catch (error) {
             console.error("Erro ao buscar viagens:", error);
             toast.error("Erro ao carregar seus roteiros.");
@@ -41,57 +38,68 @@ export const useMinhasViagens = () => {
         }
     };
 
-    // Abre o modal
+    const fetchReservas = async (viagemId) => {
+        try {
+            setLoadingReservas(true);
+            const response = await api.get(`/reservas/viagem/${viagemId}`, {
+                params: { organizadorId: user.id }
+            });
+            setReservas(response.data.content || response.data || []);
+        } catch (error) {
+            console.error("Erro ao buscar reservas:", error);
+            toast.error("Erro ao carregar lista de passageiros.");
+        } finally {
+            setLoadingReservas(false);
+        }
+    };
+
     const handleOpenModal = (viagem) => {
         setSelectedViagem(viagem);
+        fetchReservas(viagem.id);
     };
 
-    // Fecha o modal
     const handleCloseModal = () => {
         setSelectedViagem(null);
+        setReservas([]);
     };
 
-    // Ação de Editar (Placeholder por enquanto)
-    const handleEditViagem = (viagem) => {
-        toast.info(`Editar viagem: ${viagem.titulo} (Em desenvolvimento)`);
-        
+    const handleConfirmarPagamento = async (reservaId) => {
+        try {
+            await api.put(`/reservas/${reservaId}/confirmar-pagamento`, null, {
+                params: { organizadorId: user.id }
+            });
+            toast.success("Pagamento confirmado com sucesso!");
+            if (selectedViagem) fetchReservas(selectedViagem.id);
+        } catch (error) {
+            const msg = error.response?.data?.message || "Erro ao confirmar pagamento.";
+            toast.error(msg);
+        }
     };
 
     const handleCancelarViagem = async (id) => {
-        if (!window.confirm("Tem certeza que deseja cancelar esta viagem? Esta ação é irreversível.")) return;
-
+        if (!window.confirm("Tem certeza que deseja cancelar esta viagem?")) return;
         try {
             await api.put(`/viagens/${id}/cancelar`, null, {
                 params: { organizadorId: user.id }
             });
-
-            toast.success("Viagem cancelada com sucesso!");
-            handleCloseModal(); // Fecha o modal após cancelar
-            fetchViagens();     // Atualiza a lista
+            toast.success("Viagem cancelada!");
+            handleCloseModal();
+            fetchViagens();
         } catch (error) {
-            console.error("Erro ao cancelar:", error);
-            const msg = error.response?.data?.message || "Erro ao cancelar viagem.";
-            toast.error(msg);
+            toast.error("Erro ao cancelar viagem.");
         }
     };
 
     const filteredViagens = useMemo(() => {
         return viagens.filter(viagem => {
             const termo = busca.toLowerCase();
-            const matchTexto =
-                viagem.titulo?.toLowerCase().includes(termo) ||
-                viagem.destino?.toLowerCase().includes(termo);
-
+            const matchTexto = viagem.titulo?.toLowerCase().includes(termo) || 
+                               viagem.destino?.toLowerCase().includes(termo);
             if (!matchTexto) return false;
-
             if (filtroStatus === 'TODOS') return true;
             if (filtroStatus === 'CANCELADOS') return viagem.status === 'CANCELADA';
             if (filtroStatus === 'FINALIZADOS') return viagem.status === 'FINALIZADA';
-
-            if (filtroStatus === 'ABERTOS') {
-                return viagem.status === 'ABERTA' || viagem.status === 'LOTADA';
-            }
-
+            if (filtroStatus === 'ABERTOS') return viagem.status === 'ABERTA' || viagem.status === 'LOTADA';
             return true;
         });
     }, [viagens, busca, filtroStatus]);
@@ -100,7 +108,6 @@ export const useMinhasViagens = () => {
         viagens: filteredViagens,
         loading,
         handleCancelarViagem,
-        user,
         busca,
         setBusca,
         filtroStatus,
@@ -108,6 +115,8 @@ export const useMinhasViagens = () => {
         selectedViagem,
         handleOpenModal,
         handleCloseModal,
-        handleEditViagem
+        reservas,
+        loadingReservas,
+        handleConfirmarPagamento
     };
 };

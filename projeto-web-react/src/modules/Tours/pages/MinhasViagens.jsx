@@ -16,7 +16,10 @@ const MinhasViagens = () => {
         setFiltroStatus,
         selectedViagem,
         handleOpenModal,
-        handleCloseModal
+        handleCloseModal,
+        reservas,
+        loadingReservas,
+        handleConfirmarPagamento
     } = useMinhasViagens();
 
     if (loading) {
@@ -148,6 +151,9 @@ const MinhasViagens = () => {
                 viagem={selectedViagem}
                 onClose={handleCloseModal}
                 onCancel={handleCancelarViagem}
+                reservas={reservas}
+                loadingReservas={loadingReservas}
+                onConfirmarPagamento={handleConfirmarPagamento}
             />
         </div>
     );

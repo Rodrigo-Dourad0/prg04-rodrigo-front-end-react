@@ -1,6 +1,9 @@
+import React, { useState } from 'react';
+import ReservaModal from '../../Reservas/components/ReservaModal';
 import '../styles/tours.css';
 
 function Tours({ viagens }) {
+  const [viagemSelecionada, setViagemSelecionada] = useState(null);
   
   const formatData = (dataString) => {
       if (!dataString) return '';
@@ -68,7 +71,10 @@ function Tours({ viagens }) {
                                     {viagem.nomeOrganizador || 'Organizador'}
                                 </small>
                             </div>
-                            <button className="btn btn-outline-primary btn-sm rounded-pill px-4">
+                            <button 
+                                className="btn btn-outline-primary btn-sm rounded-pill px-4"
+                                onClick={() => setViagemSelecionada(viagem)}
+                            >
                                 Ver Detalhes
                             </button>
                         </div>
@@ -79,6 +85,13 @@ function Tours({ viagens }) {
         )}
 
       </div>
+
+      {viagemSelecionada && (
+        <ReservaModal 
+          viagem={viagemSelecionada} 
+          onClose={() => setViagemSelecionada(null)} 
+        />
+      )}
     </section>
   );
 }

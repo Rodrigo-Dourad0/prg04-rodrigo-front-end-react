@@ -1,76 +1,67 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useMinhasReservas } from '../hooks/useMinhasReservas';
 import '../styles/minhas-reservas.css';
 
 const MinhasReservas = () => {
-    const navigate = useNavigate();
-    const { reservas, loading, handleCancelarReserva } = useMinhasReservas();
+    const { reservas, loading, fetchMinhasReservas, handleCancelarReserva } = useMinhasReservas();
 
     if (loading) {
-        return <div className="container mt-5 text-center">Carregando suas viagens...</div>;
+        return (
+            <div className="container mt-5 text-center">
+                <div className="spinner-border text-primary" role="status"></div>
+                <p className="mt-2">Carregando suas viagens...</p>
+            </div>
+        );
     }
 
     return (
-        <div className="container mt-5 mb-5">
+        <div className="container mt-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2 className="fw-bold text-dark mb-1">Minhas Viagens</h2>
-                    <p className="text-muted mb-0">Histórico de roteiros que você participou ou vai participar</p>
-                </div>
-                <button className="btn btn-outline-secondary btn-sm" onClick={() => navigate('/perfil')}>
-                    <i className="bi bi-arrow-left me-2"></i>Voltar ao Perfil
+                <h2 className="fw-bold">Minhas Reservas</h2>
+                <button className="btn btn-outline-primary btn-sm" onClick={fetchMinhasReservas}>
+                    <i className="bi bi-arrow-clockwise me-1"></i> Atualizar
                 </button>
             </div>
 
             {reservas.length === 0 ? (
-                <div className="text-center py-5 bg-light rounded-4 border border-dashed">
-                    <i className="bi bi-suitcase-lg display-1 text-muted opacity-25"></i>
-                    <h4 className="mt-3 text-secondary">Nenhuma viagem encontrada</h4>
-                    <p className="text-muted">Você ainda não fez nenhuma reserva.</p>
-                    <button className="btn btn-primary mt-2" onClick={() => navigate('/')}>
-                        Explorar Roteiros
-                    </button>
+                <div className="alert alert-info text-center">
+                    Você ainda não possui reservas.
                 </div>
             ) : (
                 <div className="row g-4">
                     {reservas.map((reserva) => (
-                        <div key={reserva.id} className="col-lg-6">
-                            <div className="card shadow-sm border-0 rounded-4 h-100 card-reserva">
-                                <div className="card-body p-4">
-                                    <div className="d-flex justify-content-between align-items-start mb-3">
-                                        <div>
-                                            <span className={`badge rounded-pill mb-2 ${reserva.statusPagamento === 'APROVADO' ? 'bg-success' : 'bg-warning text-dark'}`}>
-                                                {reserva.statusPagamento || 'PENDENTE'}
+                        <div key={reserva.id} className="col-md-6 col-lg-4">
+                            <div className="card h-100 shadow-sm border-0 rounded-4">
+                                <div className="card-body">
+                                    <div className="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 className="card-title fw-bold mb-0">{reserva.tituloViagem}</h5>
+                                        <span className={`badge ${reserva.status === 'PAGO' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                                            {reserva.status}
+                                        </span>
+                                    </div>
+                                    <p className="text-muted small mb-3">
+                                        <i className="bi bi-person me-1"></i> Passageiro: {reserva.nomeUsuario}
+                                    </p>
+                                    <div className="bg-light p-2 rounded-3 mb-3">
+                                        <div className="d-flex justify-content-between small">
+                                            <span>Vagas:</span>
+                                            <span className="fw-bold">{reserva.quantidadeLugares}</span>
+                                        </div>
+                                        <div className="d-flex justify-content-between small">
+                                            <span>Total:</span>
+                                            <span className="fw-bold text-success">
+                                                R$ {reserva.valorTotal?.toFixed(2)}
                                             </span>
-                                            <h5 className="fw-bold text-primary mb-1">{reserva.tituloViagem}</h5>
-                                            <small className="text-muted">Reserva #{reserva.id}</small>
-                                        </div>
-                                        <div className="text-end">
-                                            {/* Data da Reserva */}
-                                            <p className="mb-0 fw-bold">{new Date(reserva.dataReserva).toLocaleDateString()}</p>
                                         </div>
                                     </div>
-
-                                    <div className="d-flex gap-3 text-secondary small mb-4">
-                                        <div className="d-flex align-items-center bg-light px-3 py-2 rounded-3">
-                                            <i className="bi bi-people-fill me-2 text-primary"></i>
-                                            <strong>{reserva.quantidadeLugares}</strong>&nbsp;Lugares
-                                        </div>
-                                        <div className="d-flex align-items-center bg-light px-3 py-2 rounded-3">
-                                            <i className="bi bi-cash-stack me-2 text-success"></i>
-                                            R$ {reserva.valorTotal ? reserva.valorTotal.toFixed(2) : '0,00'}
-                                        </div>
-                                    </div>
-
-                                    <div className="d-grid gap-2">
+                                    {reserva.status === 'PENDENTE' && (
                                         <button 
-                                            className="btn btn-outline-danger btn-sm rounded-pill"
+                                            className="btn btn-outline-danger btn-sm w-100 rounded-pill"
                                             onClick={() => handleCancelarReserva(reserva.id)}
                                         >
                                             Cancelar Reserva
                                         </button>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
