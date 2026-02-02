@@ -1,17 +1,12 @@
-import { useTours } from '../hooks/useTours';
 import '../styles/tours.css';
 
-function Tours() {
-  const { viagens, loading, formatData } = useTours();
-
-  if (loading) {
-    return (
-      <section className="tours-section text-center">
-        <div className="spinner-border text-primary" role="status"></div>
-        <p className="mt-2 text-muted">Carregando roteiros...</p>
-      </section>
-    );
-  }
+function Tours({ viagens }) {
+  
+  const formatData = (dataString) => {
+      if (!dataString) return '';
+      const date = new Date(dataString);
+      return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
 
   return (
     <section className="tours-section">
@@ -24,24 +19,22 @@ function Tours() {
             </p>
         </div>
 
-        {viagens.length === 0 ? (
+        {(!viagens || viagens.length === 0) ? (
            <div className="text-center py-5">
              <i className="bi bi-airplane display-1 text-muted opacity-25"></i>
-             <p className="mt-3 text-muted">Nenhuma viagem disponível no momento.</p>
+             <p className="mt-3 text-muted">Nenhuma viagem encontrada para sua busca.</p>
            </div>
         ) : (
           <div className="cards-grid-container">
               {viagens.map((viagem) => (
                 <div key={viagem.id} className="tour-card">
                     <div className="tour-card-img-wrapper">
-                        
                         <img 
                           src={viagem.imagemUrl || 'https://placehold.co/800x600?text=Sem+Foto'} 
                           alt={viagem.titulo} 
                           className="tour-card-img"
                           onError={(e) => {
                             e.target.onerror = null; 
-                            // Caso o link do supabase quebre ou deixe de existir, mostra isso:
                             e.target.src = 'https://placehold.co/800x600?text=Imagem+Indisponivel';
                           }}
                         />

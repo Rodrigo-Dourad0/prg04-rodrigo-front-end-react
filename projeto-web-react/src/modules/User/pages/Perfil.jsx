@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom'; // <--- 1. IMPORTANTE
+import { useNavigate } from 'react-router-dom';
 import { usePerfil } from '../hooks/usePerfil';
 import '../styles/perfil.css';
 
 function Perfil() {
-    const navigate = useNavigate(); // <--- 2. IMPORTANTE
+    const navigate = useNavigate();
     const { 
         user, 
         handleLogout, 
@@ -41,7 +41,6 @@ function Perfil() {
             <div className="container perfil-content">
                 <div className="row justify-content-center">
                     
-                    {/* Coluna da Esquerda: Card Principal */}
                     <div className="col-lg-4 text-center">
                         <div className="card shadow border-0 card-perfil-main p-4">
                             <div className="avatar-wrapper mx-auto shadow">
@@ -104,7 +103,6 @@ function Perfil() {
                                 )}
                             </div>
 
-                            {/* Botão Seja Parceiro */}
                             {!user.organizadorAtivo && !isEditing && (
                                 <div className="mt-4 pt-3 border-top">
                                     <p className="small text-muted mb-2">Gostaria de criar roteiros?</p>
@@ -119,7 +117,6 @@ function Perfil() {
                         </div>
                     </div>
 
-                    {/* Coluna da Direita: Detalhes e Painéis */}
                     <div className="col-lg-7">
                         <div className="card shadow border-0 card-perfil-details p-4 h-100">
                             <h5 className="fw-bold border-bottom pb-2 mb-4">
@@ -127,7 +124,6 @@ function Perfil() {
                             </h5>
                             
                             <div className="row gy-4">
-                                {/* Campos de Texto (Telefone e Endereço) - Mantidos iguais */}
                                 <div className="col-md-12">
                                     <div className="d-flex align-items-center gap-3">
                                         <div className="icon-box bg-light text-primary">
@@ -199,7 +195,6 @@ function Perfil() {
                                 </div>
                             </div>
                             
-                            {/* --- AQUI ESTÁ A CORREÇÃO DO BOTÃO --- */}
                             {user.organizadorAtivo && !isEditing && (
                                 <div className="mt-5 pt-4 border-top">
                                     <h5 className="fw-bold mb-3">Painel do Organizador</h5>
@@ -209,7 +204,7 @@ function Perfil() {
                                             O seu perfil de parceiro está ativo e pronto para criar novas excursões.
                                         </p>
                                         <button 
-                                            onClick={() => navigate('/gerir-roteiros')} /* <--- AÇÃO ADICIONADA */
+                                            onClick={() => navigate('/gerir-roteiros')}
                                             className="btn btn-primary btn-sm rounded-pill px-4"
                                         >
                                             Gerir Meus Roteiros
@@ -218,16 +213,19 @@ function Perfil() {
                                 </div>
                             )}
 
-                            {!user.organizadorAtivo && !isEditing && (
+                            {!isEditing && (
                                 <div className="mt-5 pt-4 border-top">
                                     <h5 className="fw-bold mb-3">Minhas Viagens</h5>
                                     <div className="bg-light p-3 rounded-4">
                                         <p className="small mb-3 text-muted">
                                             <i className="bi bi-ticket-perforated-fill text-success me-2"></i> 
-                                            Acompanhe aqui o histórico de suas próximas aventuras.
+                                            Acompanhe aqui o histórico de suas reservas e próximas aventuras.
                                         </p>
-                                        <button className="btn btn-outline-secondary btn-sm rounded-pill px-4" disabled>
-                                            Minhas Viagens (Em Breve)
+                                        <button 
+                                            onClick={() => navigate('/minhas-reservas')} 
+                                            className="btn btn-outline-primary btn-sm rounded-pill px-4"
+                                        >
+                                            Ver Minhas Reservas
                                         </button>
                                     </div>
                                 </div>

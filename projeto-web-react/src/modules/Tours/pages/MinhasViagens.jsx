@@ -14,11 +14,9 @@ const MinhasViagens = () => {
         setBusca,
         filtroStatus,
         setFiltroStatus,
-        // Novos handlers
         selectedViagem,
         handleOpenModal,
-        handleCloseModal,
-        handleEditViagem
+        handleCloseModal
     } = useMinhasViagens();
 
     if (loading) {
@@ -45,7 +43,6 @@ const MinhasViagens = () => {
                 </button>
             </div>
 
-            {/* Filtros */}
             <div className="card border-0 shadow-sm p-3 mb-4 rounded-4 bg-white">
                 <div className="row g-3">
                     <div className="col-md-8">
@@ -78,7 +75,6 @@ const MinhasViagens = () => {
                 </div>
             </div>
 
-            {/* Lista */}
             {viagens.length === 0 ? (
                 <div className="text-center py-5 bg-light rounded-4 border border-dashed mt-4">
                     <i className="bi bi-filter-circle display-1 text-muted opacity-25"></i>
@@ -91,7 +87,6 @@ const MinhasViagens = () => {
                         <div 
                             key={viagem.id} 
                             className="card shadow-sm border-0 rounded-4 overflow-hidden card-viagem-row"
-                            // Opcional: Clicar no card inteiro abre o modal também
                             style={{cursor: 'pointer'}}
                             onClick={() => handleOpenModal(viagem)}
                         >
@@ -132,12 +127,11 @@ const MinhasViagens = () => {
                                     </div>
                                 </div>
 
-                                {/* Botão Único de Ação */}
                                 <div className="col-md-2 bg-light p-3 d-flex flex-column justify-content-center border-start">
                                     <button 
                                         className="btn btn-outline-primary w-100 rounded-pill"
                                         onClick={(e) => {
-                                            e.stopPropagation(); // Evita clique duplo se o card tiver onClick
+                                            e.stopPropagation();
                                             handleOpenModal(viagem);
                                         }}
                                     >
@@ -150,12 +144,10 @@ const MinhasViagens = () => {
                 </div>
             )}
 
-            {/* MODAL DE DETALHES */}
             <TourDetailsModal 
                 viagem={selectedViagem}
                 onClose={handleCloseModal}
                 onCancel={handleCancelarViagem}
-                onEdit={handleEditViagem}
             />
         </div>
     );

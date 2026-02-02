@@ -1,41 +1,49 @@
+import React from 'react';
 import '../styles/searchbar.css';
 
-function SearchBar() {
-  return (
+const SearchBar = ({ busca, setBusca }) => {
     
-    <div className="search-bar-container d-flex align-items-center justify-content-between">
-      
-      {/* 1. Campo: Destino */}
-      <div className="input-group-custom">
-       
-        <i className="bi bi-geo-alt input-icon"></i>
-        <input 
-            type="text" 
-            placeholder="Para onde você quer ir?" 
-            className="form-control-custom"
-        />
-      </div>
+    const handleSearch = () => {
+        const section = document.getElementById('tours-section');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
-      <div className="divider d-none d-md-block"></div>
+    return (
+        <div className="search-bar-wrapper">
+            <div className="search-bar-container shadow-lg">
+                <form 
+                    className="d-flex align-items-center w-100" 
+                    onSubmit={(e) => {
+                        e.preventDefault(); 
+                        handleSearch();
+                    }}
+                >
+                    
+                    <span className="ps-4 pe-2 text-primary">
+                        <i className="bi bi-search fs-5 p-2"></i>
+                    </span>
 
-      {/* 2. Campo: Data */}
-      <div className="input-group-custom">
-        
-        <i className="bi bi-calendar-event input-icon"></i>
-        <input 
-            type="date" 
-            className="form-control-custom text-secondary"
-           
-        />
-      </div>
+                    <input 
+                        type="text" 
+                        className="form-control border-0 py-3 shadow-none custom-input" 
+                        placeholder="Para onde vamos?"
+                        value={busca} 
+                        onChange={(e) => setBusca(e.target.value)} 
+                    />
 
-      {/* 3. Botão Buscar */}
-      <button className="btn-search-hero">
-        Buscar Roteiro
-      </button>
-
-    </div>
-  );
-}
+                    <button 
+                        type="button" 
+                        onClick={handleSearch}
+                        className="btn btn-primary rounded-pill px-4 py-2 me-2 fw-bold"
+                    >
+                        Buscar
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
 
 export default SearchBar;

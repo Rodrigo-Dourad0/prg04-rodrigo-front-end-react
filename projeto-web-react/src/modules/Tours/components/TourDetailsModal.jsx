@@ -1,17 +1,14 @@
 import React from 'react';
 import '../styles/tour-details-modal.css';
 
-const TourDetailsModal = ({ viagem, onClose, onCancel, onEdit }) => {
+const TourDetailsModal = ({ viagem, onClose, onCancel }) => {
     if (!viagem) return null;
 
     const formatDateTime = (dateStr) => {
-       
         if (!dateStr || dateStr === "") return '--';
-        
         
         const date = new Date(dateStr);
 
-     
         if (isNaN(date.getTime())) {
             console.warn("Data inválida recebida:", dateStr); 
             return '--';
@@ -111,17 +108,10 @@ const TourDetailsModal = ({ viagem, onClose, onCancel, onEdit }) => {
                 </div>
 
                 <div className="p-4 border-top bg-light mt-auto">
-                    <div className="d-flex gap-3">
-                         <button 
-                            className="btn btn-primary flex-grow-1 rounded-pill fw-bold py-2 shadow-sm" 
-                            onClick={() => onEdit(viagem)}
-                         >
-                            <i className="bi bi-pencil-square me-2"></i>Editar Viagem
-                        </button>
-                        
+                    <div className="d-flex gap-3 justify-content-end">
                         {viagem.status !== 'CANCELADA' && (
                             <button 
-                                className="btn btn-outline-danger rounded-pill px-4 fw-bold" 
+                                className="btn btn-outline-danger rounded-pill px-4 fw-bold w-100" 
                                 onClick={() => onCancel(viagem.id)}
                             >
                                 <i className="bi bi-trash3 me-2"></i>Cancelar

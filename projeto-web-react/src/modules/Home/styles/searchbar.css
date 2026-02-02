@@ -1,93 +1,47 @@
+.search-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 
-:root {
-    --search-blue: #027BD1;
-    --search-gray: #6c757d;
 }
 
-/* Container Principal */
 .search-bar-container {
     background-color: #ffffff;
     border-radius: 50px;
-    padding: 0.5rem 0.5rem 0.5rem 1.5rem; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
-    max-width: 800px; 
+    max-width: 800px;
     width: 100%;
+    padding: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important; 
 }
 
-/* Grupo de Input*/
-.input-group-custom {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    padding-right: 1rem;
+.search-bar-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
 }
 
-/* Ícones*/
-.input-icon {
-    color: var(--search-blue);
-    font-size: 1.2rem;
-    margin-right: 10px;
+.custom-input {
+    font-size: 1.1rem;
+    color: #495057;
+    background: transparent;
 }
 
-/* O Campo de Digitação */
-.form-control-custom {
-    border: none;
-    outline: none;
-    width: 100%;
-    color: #333;
-    font-weight: 500;
+.custom-input::placeholder {
+    color: #adb5bd;
+    font-weight: 300;
 }
-
-/* Remove a borda azul de foco padrão do navegador */
-.form-control-custom:focus {
-    outline: none;
-}
-
-/* Linha divisória vertical entre os campos */
-.divider {
-    width: 1px;
-    height: 30px;
-    background-color: #e0e0e0;
-    margin: 0 15px;
-}
-
-/* Botão de Buscar */
-.btn-search-hero {
-    background-color: var(--search-blue);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 30px;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    white-space: nowrap; /* Impede que o texto quebre linha */
-}
-
-.btn-search-hero:hover {
-    background-color: #026aa6;
-}
-
 
 @media (max-width: 768px) {
     .search-bar-container {
-        border-radius: 20px; /* Menos arredondado no mobile */
-        flex-direction: column; /* Empilha os itens */
-        padding: 1rem;
-        gap: 1rem;
+        border-radius: 20px;
+        padding: 10px;
     }
     
-    .divider {
-        display: none; /* Esconde a linha divisória no mobile */
+    .custom-input {
+        font-size: 1rem;
     }
 
-    .input-group-custom {
-        width: 100%;
-        border-bottom: 1px solid #eee; /* Adiciona linha em baixo de cada item */
-        padding-bottom: 0.5rem;
-    }
-
-    .btn-search-hero {
-        width: 100%; /* Botão largura total no mobile */
+    .btn {
+        padding: 8px 20px;
     }
 }

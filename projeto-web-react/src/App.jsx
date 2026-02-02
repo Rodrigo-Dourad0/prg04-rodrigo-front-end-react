@@ -16,6 +16,7 @@ import SejaParceiro from './modules/Tours/pages/SejaParceiro';
 import Perfil from './modules/User/pages/Perfil';
 import GerirRoteiros from './modules/Tours/pages/GerirRoteiros';
 import MinhasViagens from './modules/Tours/pages/MinhasViagens';
+import MinhasReservas from './modules/Reservas/pages/MinhasReservas';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -60,6 +61,15 @@ function App() {
             element={
               <PrivateRoute>
                 <MinhasViagens />
+              </PrivateRoute>
+            } 
+          />
+
+          <Route 
+            path="/minhas-reservas" 
+            element={
+              <PrivateRoute>
+                <MinhasReservas />
               </PrivateRoute>
             } 
           />
